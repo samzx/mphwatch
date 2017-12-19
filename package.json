@@ -1,0 +1,32 @@
+{
+  "name": "mphstats",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sam Xie",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "dev-server": "webpack-dev-server",
+    "upload" : "scp -P21098 ./public/bundle.js ./public/index.html solengyh@solexstudios.com:mph.samxie.net"    
+  },
+  "dependencies": {
+    "babel-cli": "6.24.1",
+    "babel-core": "6.25.0",
+    "babel-loader": "7.1.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "1.5.2",
+    "babel-preset-react": "6.24.1",
+    "chart.js": "^2.7.1",
+    "css-loader": "0.28.4",
+    "node-sass": "4.5.3",
+    "normalize.css": "7.0.0",
+    "react": "16.0.0",
+    "react-chartjs-2": "^2.6.4",
+    "react-dom": "16.0.0",
+    "sass-loader": "6.0.6",
+    "style-loader": "0.18.2",
+    "webpack": "3.1.0",
+    "webpack-dev-server": "2.5.1"
+  }
+}
