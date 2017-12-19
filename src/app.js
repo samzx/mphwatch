@@ -5,6 +5,7 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
 import {Doughnut, Line, HorizontalBar, Bar, Pie} from 'react-chartjs-2';
+import { fail } from 'assert';
 
 class App extends React.Component{
     state = {
@@ -23,7 +24,8 @@ class App extends React.Component{
         dash: 'cornflowerblue',
         feathercoin: 'grey',
         siacoin: 'springgreen',
-        zencash: 'tan'
+        zencash: 'tan',
+        zcash: 'orange'
     }
 
     fetchPrices = (coin) => {
@@ -36,7 +38,7 @@ class App extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             this.setState((prevState) => ({
                 prices: [
                     ...prevState.prices,
@@ -92,6 +94,15 @@ class App extends React.Component{
             return items[0].name;
         }
     }
+    
+    getColor = (id) => {
+        const color = this.backgroundColor[id];
+        if(color){
+            return color;
+        } else {
+            return "#"+((1<<24)*Math.random()|0).toString(16);
+        }
+    }
 
     pair = () => {
         const pairs = this.state.balances.map(({coin, confirmed, ae_unconfirmed, unconfirmed}, index) => {
@@ -116,15 +127,6 @@ class App extends React.Component{
         })
         return sum;
     }
-    
-    getColor = (id) => {
-        const color = this.backgroundColor[id];
-        if(color){
-            return color;
-        } else {
-            return "#"+((1<<24)*Math.random()|0).toString(16);
-        }
-    }
 
     generateDoughnutData = () => {
         const pairs = this.pair();
@@ -134,7 +136,7 @@ class App extends React.Component{
                     data: pairs.map((pair) => (pair.price * pair.total / this.sumTotal() * 100).toFixed(2) ),
                     backgroundColor: pairs.map((pair) => this.getColor(pair.coin))
                 }],
-            labels: pairs.map((pair) => pair.coin)
+            labels: pairs.map((pair) => this.getName(pair.coin))
         };
         return data;
     }
@@ -147,19 +149,19 @@ class App extends React.Component{
                 {
                     // Confirmed
                     label: 'Confirmed',
-                    data: pairs.map((pair) => (pair.confirmed * pair.price)) ,
+                    data: pairs.map((pair) => (pair.confirmed * pair.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })) ,
                     backgroundColor: pairs.map((pair) => 'green')
                 },
                 {
                     // On exchange
                     label: 'On exchange',
-                    data: pairs.map((pair) => (pair.ae_unconfirmed * pair.price)),
+                    data: pairs.map((pair) => (pair.ae_unconfirmed * pair.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })),
                     backgroundColor: pairs.map((pair) => 'orange')
                 },
                 {
                     // Unconfirmed
                     label: 'Unconfirmed',
-                    data: pairs.map((pair) => (pair.unconfirmed * pair.price)),
+                    data: pairs.map((pair) => (pair.unconfirmed * pair.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })),
                     backgroundColor: pairs.map((pair) => 'crimson')
                 },
             ],
@@ -174,9 +176,9 @@ class App extends React.Component{
 
     render(){
         return (
-            <div style={{textAlign: 'center', width: 720, margin: '5rem auto' }}>
+            <div style={{textAlign: 'center', margin: '5rem auto' }}>
                 <h1> Mining Pool Hub Stats </h1>
-                <h4>{this.state.apiKey}</h4>
+                <p style={{overflowWrap: 'break-word'}}>{this.state.apiKey}</p>
                 <div>
                     {
                         this.pair()
@@ -196,29 +198,41 @@ class App extends React.Component{
                     }
                 </div>
                 {
-                    <div>
-                        <Doughnut 
-                            data={this.generateDoughnutData()}
-                        />
-                        <Bar 
-                            data={this.generateBarData()}
-                            options = {{
-                                scales: {
-                                    xAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }}
-                        />
+                    <div style={{}}>
+                        <div className="charts" >
+                            <Doughnut
+                                width={640}
+                                height={480}
+                                data={this.generateDoughnutData()}
+                                options = {{
+                                    responsive: false
+                                }}
+                            />
+                        </div>
+                        <div className="charts" >
+                            <Bar
+                                data={this.generateBarData()}
+                                width={640}
+                                height={480}
+                                options = {{
+                                    responsive: false,
+                                    scales: {
+                                        xAxes: [{
+                                            stacked: true,
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            stacked: true,
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }}
+                            />
+                        </div>
                     </div>
                 }
             </div>

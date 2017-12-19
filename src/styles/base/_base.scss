@@ -14,3 +14,9 @@ button {
 button:disabled{
     cursor: default;
 }
+
+.charts{
+    display: flex;
+    justify-content: center;
+    // width: 72rem;
+}
