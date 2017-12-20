@@ -16,7 +16,21 @@ button:disabled{
 }
 
 .charts{
-    display: flex;
-    justify-content: center;
-    // width: 72rem;
+    padding:1rem;
+}
+
+.input-container{
+    margin: auto;
+    text-align: center;
+}
+
+.input{
+    width: 36rem;
+    text-align: center;
+}
+
+@media (min-width: 480px){
+    .charts{
+        padding: 5rem;
+    }
 }
