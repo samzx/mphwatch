@@ -13,16 +13,13 @@ export default class Dashboard extends React.Component{
         mining: {},
         workers: [],
         remaining: 0,
+        amount24hr: [],
         error: '',
-        // proxyurl: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/'
-        // proxyurl: 'https://cors.io/',
-        // proxyurl: 'https://cors-anywhere.herokuapp.com/',
-        // proxyurl: 'https://cryptic-headland-94862.herokuapp.com/',
-        // proxyurl: 'http://corsproxy.solexstudios.com/'
     }
-    tempPrices = []
-    tempWorkers = []
+    tempPrices = [];
+    tempWorkers = [];
+    temp24hr = [];
     backgroundColor = {
         bitcoin: 'orange',
         'bitcoin-gold': 'gold',
@@ -33,14 +30,30 @@ export default class Dashboard extends React.Component{
         dash: 'cornflowerblue',
         feathercoin: 'grey',
         siacoin: 'springgreen',
-        zencash: 'tan',
-        zcash: 'orange'
+        zencash: 'orange',
+        zcash: 'orange',
+        zclassic: 'grey'
     }
     minPayout = {
         dash: 0.01
     }
 
     state = this.defaultState;
+
+    fetch24hr = (coin) => {
+        const url = `https://${coin}.miningpoolhub.com/index.php?page=api&action=getdashboarddata&api_key=${this.state.apiKey}`;
+        const promise = fetch(this.state.proxyurl + url, {
+            method: "GET",
+        })
+        .then((resp) => {
+            return resp.json();
+        })
+        .then((data) => {
+            console.log(coin, data.getdashboarddata.data.recent_credits_24hours.amount);
+            this.temp24hr.push({coin, amount: data.getdashboarddata.data.recent_credits_24hours.amount});
+        })
+        return { promise }
+    }
 
     fetchHash = (coin) => {
         const url = `https://${coin}.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=${this.state.apiKey}`;
@@ -122,6 +135,13 @@ export default class Dashboard extends React.Component{
             .then(() => {
                 this.setState(() => ({prices: this.tempPrices}));
                 this.tempPrices = [];
+            })
+
+            Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
+            .then(() => {
+                console.log("promise fulfilled");
+                this.setState(() => ({amount24hr: this.temp24hr}));
+                this.temp24hr = [];
             })
 
             Promise.all(balances.map((balance) => this.fetchHash(balance.coin).promise))
@@ -216,6 +236,14 @@ export default class Dashboard extends React.Component{
 
         return maxPair;
     }
+    get24hr = (coin) => {
+        if(this.state.amount24hr.length > 0){
+            const coinObj = this.state.amount24hr.filter((obj) => {
+                return obj.coin == coin;
+            })[0];
+            return coinObj.amount;
+        }
+    }
 
     getMinPayout = () => {
         const maxPair = this.getPrimaryCoin();
@@ -234,13 +262,44 @@ export default class Dashboard extends React.Component{
         let data = { 
             datasets: [
                 { 
-                    data: pairs.map((pair) => (pair.price * pair.total / this.sumTotal('total') * 100).toFixed(2) ),
+                    // data: pairs.map((pair) => (pair.price * pair.total / this.sumTotal('total') * 100).toFixed(2) ),
+                    data: pairs.map((pair) => (pair.price * this.get24hr(pair.coin)).toFixed(2)), // (pair.price * this.get24hr(pair.coin) / this.sumTotal('total') * 100).toFixed(2) ),
                     backgroundColor: pairs.map((pair) => this.getColor(pair.coin))
                 }],
             labels: pairs.map((pair) => this.getName(pair.coin))
         };
         return data;
     }
+
+    getBarOptions = () => (
+        {
+            title: {
+                display: true,
+                text: 'Dollar Value (USD)',
+                position: 'top'
+            },
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        labelString: 'Dollar Value (USD)',
+                        display: true
+                    },
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    },
+                }]
+            }
+        }
+    );
 
     generateBarData = () => {
         const pairs = this.pair();
@@ -271,8 +330,67 @@ export default class Dashboard extends React.Component{
         return data;
     }
 
+    getProgressBarData = () => (
+        {
+            datasets:[
+                {
+                    label: 'Confirmed',
+                    data: [this.readify(this.sumTotal('confirmed')/this.getMinPayout()*100)],
+                    backgroundColor: 'green'
+                },
+                {
+                    label: 'On Exchange',
+                    data: [this.readify(this.sumTotal('exchange')/this.getMinPayout()*100)],
+                    backgroundColor: 'orange'
+                },
+                {
+                    label: 'Unconfirmed',
+                    data: [this.readify(this.sumTotal('unconfirmed')/this.getMinPayout()*100)],
+                    backgroundColor: 'red'
+                },
+                {
+                    label: 'Remaining',
+                    data: [this.readify(this.getRemaining()/this.getMinPayout()*100)],
+                }
+            ],
+            labels: []
+        }
+    );
+
+    getProgressBarOptions = () => (
+        {
+            tooltips:{
+                enabled: false
+            },
+            legend: {
+                display: true,
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            events: [],
+            hover: {
+                
+            }
+        }
+    );
+
     readify(number){
-        return number.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if(number){
+            return number.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
     }
 
     significate(number){
@@ -309,6 +427,15 @@ export default class Dashboard extends React.Component{
         return { dailyProfit, algorithm };
     }
 
+    getTotalProfit = () => {
+        let profit = 0;
+        this.state.workers.map(({hashrate, coin}) => {
+            profit += this.getProfit(coin, hashrate).dailyProfit;
+        })
+        console.log(profit);
+        return profit;
+    }
+
     getRemainingTime = (daysRemaining) => {
         let delta = daysRemaining * 86400;
         const days = Math.floor(delta / 86400);
@@ -332,7 +459,7 @@ export default class Dashboard extends React.Component{
         } , 60000);
 
         setTimeout(() => {
-            this.setState(() => ({workers: [{username: 'samx', hashrate: 0.4, coin: 'bitcoin-gold'}]}))
+            // this.setState(() => ({workers: [{username: 'samx', hashrate: 0.4, coin: 'bitcoin-gold'}]}))
         }, 3000);
     }
 
@@ -348,83 +475,66 @@ export default class Dashboard extends React.Component{
                 {
                     <div className="charts" >
                         <h1> Payout Progress {} </h1>
+
                         <HorizontalBar
                             height={80}
-                            data={{
-                                datasets:[
-                                    {
-                                        label: 'Confirmed',
-                                        data: [this.readify(this.sumTotal('confirmed')/this.getMinPayout()*100)],
-                                        backgroundColor: 'green'
-                                    },
-                                    {
-                                        label: 'On Exchange',
-                                        data: [this.readify(this.sumTotal('exchange')/this.getMinPayout()*100)],
-                                        backgroundColor: 'orange'
-                                    },
-                                    {
-                                        label: 'Unconfirmed',
-                                        data: [this.readify(this.sumTotal('unconfirmed')/this.getMinPayout()*100)],
-                                        backgroundColor: 'red'
-                                    },
-                                    {
-                                        label: 'Remaining',
-                                        data: [this.readify(this.getRemaining()/this.getMinPayout()*100)],
-                                    }
-                                ],
-                                labels: []
-                            }}
-                            options={{
-                                title: {
-                                    display: false,
-                                    text: 'Percentage',
-                                    position: 'bottom'
-                                },
-                                xAxisID: "test",
-                                tooltips:{
-                                    enabled: false
-                                },
-                                legend: {
-                                    display: true,
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            beginAtZero: true,
-                                            max: 100
-                                        },
-                                    }],
-                                    yAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }}
+                            data={this.getProgressBarData()}
+                            options={this.getProgressBarOptions()}
                         />
+
                     </div>
                 }
                 {
                     this.state.workers.map(({hashrate, username, coin}) => {
-                        // console.log(this.state.workers);
-                        const {dailyProfit, algorithm} = this.getProfit('bitcoin-gold', 0.4);
+                        console.log(this.state.workers);
+                        const {dailyProfit, algorithm} = this.getProfit(coin, hashrate);
                         const daysRemaining = this.getRemaining() / dailyProfit;
-                        const {days, hours} = this.getRemainingTime(daysRemaining);
+                        
 
                         return (
                             <div key={`worker:${username}${coin}-div`}>
                                 <p key={`worker:${username}${coin}-hash`} >{username} : {algorithm} : {coin} : {`${this.readify(this.significate(hashrate).value)} ${this.significate(hashrate).unit}`}</p>
-                                <p key={`worker:${username}${coin}-profit`}> Day: ${`${dailyProfit}`}</p>
-                                <p key={`worker:${username}${coin}-remaining`}> Time until payout: {days} days, {hours} hours </p>
+                                <p key={`worker:${username}${coin}-profit`}> Daily: ${`${dailyProfit}`}</p>
+                                <p key={`worker:${username}${coin}-profit`}> Weekly: ${`${(dailyProfit * 7).toFixed(2)}`}</p>
+                                <p key={`worker:${username}${coin}-profit`}> Monthly: ${`${(dailyProfit * 365 / 12).toFixed(2)}`}</p>
                             </div>
                         );
                     })
                 }
                 {
+                    this.state.workers.length > 1 && 
+                    <p key={`totalProfit`}> Total Daily: ${`${this.getTotalProfit()}`} </p>
+                }
+                {
+                    <div>
+                        <p key={`totalTimeUntilPayout`}> Time until payout: {
+                            this.getRemainingTime(this.getRemaining() / this.getTotalProfit()).days
+                        } days, {
+                            this.getRemainingTime(this.getRemaining() / this.getTotalProfit()).hours
+                        }  hours </p>
+                        <p> Payout Amount: ${this.readify(this.getMinPayout())}</p>
+                    </div>
+
+                }
+                {
                     <div style={{}}>
+                        <div className="charts" >
+                            <h1>Holdings</h1>
+
+                            <Bar
+                                data={this.generateBarData()}
+                                width={640}
+                                height={480}
+                                options = {this.getBarOptions()}
+                            />
+
+                        </div>
                         <div>
+                            {
+                                <h2>
+                                    Total: ${this.readify(this.sumTotal('total'))}
+                                </h2>
+                            }
                             {
                                 this.pair()
                                 .map(({coin, confirmed, unconfirmed, ae_unconfirmed, total, price}, index) => {
@@ -435,41 +545,10 @@ export default class Dashboard extends React.Component{
                                     );
                                 })
                             }
-                            {
-                                <h2>
-                                    Total: ${this.readify(this.sumTotal('total'))}
-
-                                </h2>
-                            }
-                        </div>
-                        <div className="charts" >
-                            <h1>Holdings</h1>
-                            <Bar
-                                data={this.generateBarData()}
-                                width={640}
-                                height={480}
-                                options = {{
-                                    responsive: true,
-                                    scales: {
-                                        xAxes: [{
-                                            stacked: true,
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }],
-                                        yAxes: [{
-                                            stacked: true,
-                                            ticks: {
-                                                beginAtZero: true
-                                            },
-                                        }]
-                                    }
-                                }}
-                            />
                         </div>
                         <div className="charts" >
                             <h1> 24 Hour Credit Distribution</h1>
-                            {/* Make this for past 24 hours */}
+
                             <Pie
                                 width={640}
                                 height={480}
@@ -478,11 +557,13 @@ export default class Dashboard extends React.Component{
                                     responsive: true,
                                     tooltips: {
                                         callbacks: {
-                                            title: (tooltipItem, chart) => {return 'Percentage'}
-                                        }
+                                            title: (tooltipItem, chart) => {return 'Percentage'},
+                                            afterLabel: (tooltipItem, chart) => {"yes"}
+                                        },
                                     }
                                 }}
                             />
+
                         </div>
                     </div>
                     }
