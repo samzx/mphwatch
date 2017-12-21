@@ -4,8 +4,6 @@ import { setTimeout } from 'timers';
 
 export default class Dashboard extends React.Component{
     
-    
-    
     defaultState = {
         apiKey: '', //'0bfbef832c137478240043c7d430815a940e19ddb481928cf51b811fc02297cd',
         balances: [],
@@ -49,7 +47,7 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            console.log(coin, data.getdashboarddata.data.recent_credits_24hours.amount);
+            // console.log(coin, data.getdashboarddata.data.recent_credits_24hours.amount);
             this.temp24hr.push({coin, amount: data.getdashboarddata.data.recent_credits_24hours.amount});
         })
         return { promise }
@@ -423,7 +421,7 @@ export default class Dashboard extends React.Component{
         const secondsPerDay = 86400;
         const coinsPerDay = coinPerSecond * secondsPerDay;
         const miningShare = hashrate * 1000 / nethash;
-        const dailyProfit = this.readify(coinsPerDay * this.getPrice(coin) * miningShare);
+        const dailyProfit = coinsPerDay * this.getPrice(coin) * miningShare;
         return { dailyProfit, algorithm };
     }
 
@@ -432,7 +430,6 @@ export default class Dashboard extends React.Component{
         this.state.workers.map(({hashrate, coin}) => {
             profit += this.getProfit(coin, hashrate).dailyProfit;
         })
-        console.log(profit);
         return profit;
     }
 
@@ -486,24 +483,24 @@ export default class Dashboard extends React.Component{
                 }
                 {
                     this.state.workers.map(({hashrate, username, coin}) => {
-                        console.log(this.state.workers);
+                        // console.log(this.state.workers);
                         const {dailyProfit, algorithm} = this.getProfit(coin, hashrate);
                         const daysRemaining = this.getRemaining() / dailyProfit;
                         
 
                         return (
                             <div key={`worker:${username}${coin}-div`}>
-                                <p key={`worker:${username}${coin}-hash`} >{username} : {algorithm} : {coin} : {`${this.readify(this.significate(hashrate).value)} ${this.significate(hashrate).unit}`}</p>
-                                <p key={`worker:${username}${coin}-profit`}> Daily: ${`${dailyProfit}`}</p>
-                                <p key={`worker:${username}${coin}-profit`}> Weekly: ${`${(dailyProfit * 7).toFixed(2)}`}</p>
-                                <p key={`worker:${username}${coin}-profit`}> Monthly: ${`${(dailyProfit * 365 / 12).toFixed(2)}`}</p>
+                                <p key={`worker:${username}${coin}-hash`} >{username} : {algorithm} : {this.getName(coin)} : {`${this.readify(this.significate(hashrate).value)} ${this.significate(hashrate).unit}`}</p>
+                                <p key={`worker:${username}${coin}-profit`}> Daily: ${`${this.readify(dailyProfit)}`}</p>
+                                <p key={`worker:${username}${coin}-wk`}> Weekly: ${`${this.readify(dailyProfit * 7)}`}</p>
+                                <p key={`worker:${username}${coin}-mt`}> Monthly: ${`${this.readify(dailyProfit * 365 / 12)}`}</p>
                             </div>
                         );
                     })
                 }
                 {
                     this.state.workers.length > 1 && 
-                    <p key={`totalProfit`}> Total Daily: ${`${this.getTotalProfit()}`} </p>
+                    <h2 key={`totalProfit`}> Total Daily: ${`${this.readify(this.getTotalProfit())}`} </h2>
                 }
                 {
                     <div>
