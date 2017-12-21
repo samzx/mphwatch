@@ -1,6 +1,14 @@
 import React from 'react';
 import {Doughnut, Line, HorizontalBar, Bar, Pie} from 'react-chartjs-2';
 import { setTimeout } from 'timers';
+import Header from './Header';
+import Progress from './Progress';
+import HoldingsChart from './HoldingsChart';
+import Balance from './Balance';
+import Distribution from './Distribution';
+import PayoutEstimate from './PayoutEstimate';
+import Workers from './Workers';
+import Profit from './Profit';
 
 export default class Dashboard extends React.Component{
     
@@ -181,45 +189,6 @@ export default class Dashboard extends React.Component{
         }
     }
 
-    pair = () => {
-        const pairs = this.state.balances.map(({coin, confirmed, ae_unconfirmed, unconfirmed}, index) => {
-            return {
-                coin,
-                confirmed,
-                ae_unconfirmed,
-                unconfirmed,
-                total: confirmed + ae_unconfirmed + unconfirmed,
-                price: this.getPrice(coin)
-            }
-        }).sort((a,b) => {
-            return b.price * b.total - a.price * a.total;
-        });
-        return pairs;
-    }
-
-    sumTotal = (mode) => {
-        let sum = 0;
-        this.pair().forEach((entry) => {
-            let part;
-            switch(mode){
-                case 'total':
-                    part = entry.total;
-                    break;
-                case 'confirmed':
-                    part = entry.confirmed;
-                    break;
-                case 'exchange':
-                    part = entry.ae_unconfirmed;
-                    break;
-                case 'unconfirmed':
-                    part = entry.unconfirmed;
-                    break;
-            }
-            sum += entry.price * part;
-        })
-        return sum;
-    }
-
     getPrimaryCoin = () => {
         const pairs = this.pair();
         let max = 0;
@@ -239,7 +208,11 @@ export default class Dashboard extends React.Component{
             const coinObj = this.state.amount24hr.filter((obj) => {
                 return obj.coin == coin;
             })[0];
-            return coinObj.amount;
+            try{
+                return coinObj.amount;
+            } catch (e) {
+                return undefined;
+            }
         }
     }
 
@@ -255,143 +228,7 @@ export default class Dashboard extends React.Component{
         return this.getMinPayout() - this.sumTotal('total');
     }
 
-    generateDoughnutData = () => {
-        const pairs = this.pair();
-        let data = { 
-            datasets: [
-                { 
-                    // data: pairs.map((pair) => (pair.price * pair.total / this.sumTotal('total') * 100).toFixed(2) ),
-                    data: pairs.map((pair) => (pair.price * this.get24hr(pair.coin)).toFixed(2)), // (pair.price * this.get24hr(pair.coin) / this.sumTotal('total') * 100).toFixed(2) ),
-                    backgroundColor: pairs.map((pair) => this.getColor(pair.coin))
-                }],
-            labels: pairs.map((pair) => this.getName(pair.coin))
-        };
-        return data;
-    }
-
-    getBarOptions = () => (
-        {
-            title: {
-                display: true,
-                text: 'Dollar Value (USD)',
-                position: 'top'
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        labelString: 'Dollar Value (USD)',
-                        display: true
-                    },
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true
-                    },
-                }]
-            }
-        }
-    );
-
-    generateBarData = () => {
-        const pairs = this.pair();
-        // console.log(pairs);
-        let data = {
-            datasets:[
-                {
-                    // Confirmed
-                    label: 'Confirmed',
-                    data: pairs.map((pair) => this.readify(pair.confirmed * pair.price)) ,
-                    backgroundColor: pairs.map((pair) => 'green')
-                },
-                {
-                    // On exchange
-                    label: 'On exchange',
-                    data: pairs.map((pair) => this.readify(pair.ae_unconfirmed * pair.price)),
-                    backgroundColor: pairs.map((pair) => 'orange')
-                },
-                {
-                    // Unconfirmed
-                    label: 'Unconfirmed',
-                    data: pairs.map((pair) => this.readify(pair.unconfirmed * pair.price)),
-                    backgroundColor: pairs.map((pair) => 'crimson')
-                },
-            ],
-            labels: pairs.map((pair) => this.getName(pair.coin))
-        }
-        return data;
-    }
-
-    getProgressBarData = () => (
-        {
-            datasets:[
-                {
-                    label: 'Confirmed',
-                    data: [this.readify(this.sumTotal('confirmed')/this.getMinPayout()*100)],
-                    backgroundColor: 'green'
-                },
-                {
-                    label: 'On Exchange',
-                    data: [this.readify(this.sumTotal('exchange')/this.getMinPayout()*100)],
-                    backgroundColor: 'orange'
-                },
-                {
-                    label: 'Unconfirmed',
-                    data: [this.readify(this.sumTotal('unconfirmed')/this.getMinPayout()*100)],
-                    backgroundColor: 'red'
-                },
-                {
-                    label: 'Remaining',
-                    data: [this.readify(this.getRemaining()/this.getMinPayout()*100)],
-                }
-            ],
-            labels: []
-        }
-    );
-
-    getProgressBarOptions = () => (
-        {
-            tooltips:{
-                enabled: false
-            },
-            legend: {
-                display: true,
-            },
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100
-                    },
-                }],
-                yAxes: [{
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            events: [],
-            hover: {
-                
-            }
-        }
-    );
-
-    readify(number){
-        if(number){
-            return number.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-    }
-
-    significate(number){
+    getUnit(number){
         let unit = '';
         let value = 0;
         if(number < 1){
@@ -443,6 +280,51 @@ export default class Dashboard extends React.Component{
         return {days, hours, delta};
     }
 
+    pair = () => {
+        const pairs = this.state.balances.map(({coin, confirmed, ae_unconfirmed, unconfirmed}, index) => {
+            return {
+                coin,
+                confirmed,
+                ae_unconfirmed,
+                unconfirmed,
+                total: confirmed + ae_unconfirmed + unconfirmed,
+                price: this.getPrice(coin)
+            }
+        }).sort((a,b) => {
+            return b.price * b.total - a.price * a.total;
+        });
+        return pairs;
+    }
+
+    sumTotal = (mode) => {
+        let sum = 0;
+        this.pair().forEach((entry) => {
+            let part;
+            switch(mode){
+                case 'total':
+                    part = entry.total;
+                    break;
+                case 'confirmed':
+                    part = entry.confirmed;
+                    break;
+                case 'exchange':
+                    part = entry.ae_unconfirmed;
+                    break;
+                case 'unconfirmed':
+                    part = entry.unconfirmed;
+                    break;
+            }
+            sum += entry.price * part;
+        })
+        return sum;
+    }
+
+    readify(number){
+        if(number){
+            return number.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    }
+
     componentWillMount(){
         this.setState(() => ({ apiKey: this.props.match.params.id }));
     }
@@ -463,107 +345,59 @@ export default class Dashboard extends React.Component{
     render(){
         return (
             <div style={{textAlign: 'center', margin: '5rem auto', maxWidth: 720 }}>
-                <h1> Mining Pool Hub Stats </h1>
-                {
-                    !this.state.error && <h3>Your API key is</h3>
-                }
-                <p style={{overflowWrap: 'break-word'}}>{ !this.state.error ? this.props.match.params.id : this.state.error}</p>
-                <h3>Consider bookmarking me for future use 😇</h3>
-                {
-                    <div className="charts" >
-                        <h1> Payout Progress {} </h1>
+                <Header 
+                    error={this.state.error}
+                    id={this.props.match.params.id}
+                />
 
-                        <HorizontalBar
-                            height={80}
-                            data={this.getProgressBarData()}
-                            options={this.getProgressBarOptions()}
-                        />
+                <Progress 
+                    readify={this.readify}
+                    sumTotal={this.sumTotal}
+                    getMinPayout={this.getMinPayout}
+                    getRemaining={this.getRemaining}
+                />
 
-                    </div>
-                }
-                {
-                    this.state.workers.map(({hashrate, username, coin}) => {
-                        // console.log(this.state.workers);
-                        const {dailyProfit, algorithm} = this.getProfit(coin, hashrate);
-                        const daysRemaining = this.getRemaining() / dailyProfit;
-                        
+                <Workers
+                    workers={this.state.workers}
+                    getProfit={this.getProfit}
+                    getName={this.getName}
+                    readify={this.readify}
+                    getUnit={this.getUnit}
+                />
+                <Profit
+                    display={this.state.workers.length > 0}
+                    readify={this.readify}
+                    getTotalProfit={this.getTotalProfit}
+                />
 
-                        return (
-                            <div key={`worker:${username}${coin}-div`}>
-                                <p key={`worker:${username}${coin}-hash`} >{username} : {algorithm} : {this.getName(coin)} : {`${this.readify(this.significate(hashrate).value)} ${this.significate(hashrate).unit}`}</p>
-                                <p key={`worker:${username}${coin}-profit`}> Daily: ${`${this.readify(dailyProfit)}`}</p>
-                                <p key={`worker:${username}${coin}-wk`}> Weekly: ${`${this.readify(dailyProfit * 7)}`}</p>
-                                <p key={`worker:${username}${coin}-mt`}> Monthly: ${`${this.readify(dailyProfit * 365 / 12)}`}</p>
-                            </div>
-                        );
-                    })
-                }
-                {
-                    this.state.workers.length > 1 && 
-                    <h2 key={`totalProfit`}> Total Daily: ${`${this.readify(this.getTotalProfit())}`} </h2>
-                }
-                {
-                    <div>
-                        <p key={`totalTimeUntilPayout`}> Time until payout: {
-                            this.getRemainingTime(this.getRemaining() / this.getTotalProfit()).days
-                        } days, {
-                            this.getRemainingTime(this.getRemaining() / this.getTotalProfit()).hours
-                        }  hours </p>
-                        <p> Payout Amount: ${this.readify(this.getMinPayout())}</p>
-                    </div>
+                <PayoutEstimate
+                    display={this.state.workers.length > 0}
+                    getRemainingTime={this.getRemainingTime}
+                    getRemaining={this.getRemaining}
+                    getTotalProfit={this.getTotalProfit}
+                    readify={this.readify}
+                    getMinPayout={this.getMinPayout}
+                />
 
-                }
-                {
-                    <div style={{}}>
-                        <div className="charts" >
-                            <h1>Holdings</h1>
+                <HoldingsChart 
+                    pair={this.pair}
+                    readify={this.readify}
+                    getName={this.getName}
+                />
 
-                            <Bar
-                                data={this.generateBarData()}
-                                width={640}
-                                height={480}
-                                options = {this.getBarOptions()}
-                            />
+                <Balance
+                    pair={this.pair}
+                    readify={this.readify}
+                    getName={this.getName}
+                    sumTotal={this.sumTotal}
+                />
 
-                        </div>
-                        <div>
-                            {
-                                <h2>
-                                    Total: ${this.readify(this.sumTotal('total'))}
-                                </h2>
-                            }
-                            {
-                                this.pair()
-                                .map(({coin, confirmed, unconfirmed, ae_unconfirmed, total, price}, index) => {
-                                    return (
-                                        <div key={`balance-${index}`}>
-                                            {this.getName(coin)}: ${this.readify(total * price)}
-                                        </div>
-                                    );
-                                })
-                            }
-                        </div>
-                        <div className="charts" >
-                            <h1> 24 Hour Credit Distribution</h1>
-
-                            <Pie
-                                width={640}
-                                height={480}
-                                data={this.generateDoughnutData()}
-                                options = {{
-                                    responsive: true,
-                                    tooltips: {
-                                        callbacks: {
-                                            title: (tooltipItem, chart) => {return 'Percentage'},
-                                            afterLabel: (tooltipItem, chart) => {"yes"}
-                                        },
-                                    }
-                                }}
-                            />
-
-                        </div>
-                    </div>
-                    }
+                <Distribution
+                    pair={this.pair}
+                    get24hr={this.get24hr}
+                    getColor={this.getColor}
+                    getName={this.getName}
+                />
             </div>
         );
     }
