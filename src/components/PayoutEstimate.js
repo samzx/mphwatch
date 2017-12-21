@@ -9,18 +9,17 @@ class PayoutEstimate extends React.Component{
     }
 
     render(){
-        if(props.display){
-            return (
-                <div>
-                    <p key={`totalTimeUntilPayout`}> Time until payout: {
-                        this.timeBeforePayout().days
-                    } days, {
-                        this.timeBeforePayout().hours
-                    }  hours </p>
-                    <p> Payout Amount: ${this.props.readify(this.props.getMinPayout())}</p>
-                </div>
-            );
-        }
+        return (
+            this.props.display && 
+            <div>
+                <p key={`totalTimeUntilPayout`}> Time until payout: {
+                    this.timeBeforePayout().days
+                } days, {
+                    this.timeBeforePayout().hours
+                }  hours </p>
+                <p> Payout Amount: ${this.props.readify(this.props.getMinPayout())}</p>
+            </div>
+        );
     }
 }
 
