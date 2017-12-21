@@ -21,7 +21,7 @@ class Distribution extends React.Component{
             responsive: true,
             tooltips: {
                 callbacks: {
-                    title: (tooltipItem, chart) => {return 'Percentage'},
+                    title: (tooltipItem, chart) => {return 'Dollar Value'},
                     afterLabel: (tooltipItem, chart) => {"yes"}
                 },
             }

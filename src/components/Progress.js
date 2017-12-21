@@ -9,17 +9,17 @@ class Progress extends React.Component{
                 {
                     label: 'Confirmed',
                     data: [this.props.readify(this.props.sumTotal('confirmed')/ this.props.getMinPayout()*100)],
-                    backgroundColor: 'green'
+                    backgroundColor: this.props.backgroundColor.confirmed
                 },
                 {
                     label: 'On Exchange',
                     data: [this.props.readify(this.props.sumTotal('exchange')/ this.props.getMinPayout()*100)],
-                    backgroundColor: 'orange'
+                    backgroundColor: this.props.backgroundColor.exchange
                 },
                 {
                     label: 'Unconfirmed',
                     data: [this.props.readify(this.props.sumTotal('unconfirmed')/ this.props.getMinPayout()*100)],
-                    backgroundColor: 'red'
+                    backgroundColor: this.props.backgroundColor.unconfirmed
                 },
                 {
                     label: 'Remaining',
@@ -36,7 +36,7 @@ class Progress extends React.Component{
                 enabled: false
             },
             legend: {
-                display: true,
+                display: false,
             },
             scales: {
                 xAxes: [{
@@ -47,6 +47,7 @@ class Progress extends React.Component{
                     },
                 }],
                 yAxes: [{
+                    maxbarThickness: 50,
                     stacked: true,
                     ticks: {
                         beginAtZero: true
@@ -64,10 +65,10 @@ class Progress extends React.Component{
         return (
             <div>
                 <div className="charts" >
-                    <h1> Payout Progress {} </h1>
+                    <h2> Payout Progress {} </h2>
         
                     <HorizontalBar
-                        height={80}
+                        height={40}
                         data={this.getProgressBarData()}
                         options={this.getProgressBarOptions()}
                     />

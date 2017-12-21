@@ -6,8 +6,8 @@ const Header = (props) => (
         {
             !props.error && <h3>Your API key is</h3>
         }
-        <p style={{overflowWrap: 'break-word'}}>{ !props.error ? props.id : props.error}</p>
-        <h3>Consider bookmarking me for future use 😇</h3>
+        <p style={{overflowWrap: 'break-word', padding: '2rem'}}>{ !props.error ? props.id : props.error}</p>
+        <p>Consider bookmarking me for future use 😇</p>
     </div>
 );
 

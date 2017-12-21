@@ -23,26 +23,45 @@ export default class Dashboard extends React.Component{
         error: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/'
     }
+
+    backgroundColor = {
+        confirmed: '#2E7D32',
+        exchange: '#FF9800',
+        unconfirmed: '#C62828',
+        bitcoin: '#FFE0B2',
+        litecoin: '#F5F5F5',
+        monero: '#FFCCBC',
+        ethereum: '#CFD8DC',
+        dash: '#BBDEFB',
+        vertcoin: '#C8E6C9',
+        'bitcoin-gold': '#FFECB3',
+        monacoin: '#FFF9C4',
+        feathercoin: '#FAFAFA',
+        siacoin: '#B9F6CA',
+        zencash: '#FFD180',
+        zcash: '#FFE57F',
+        zclassic: '#EEEEEE'
+    }
+
+    minPayout = {
+        bitcoin: 0.001,
+        litecoin: 0.002,
+        ethereum: 0.01,
+        monero: 0.05,
+        dash: 0.01,
+        zencash: 0.001,
+        zcash: 0.001,
+        siacoin: 0.01,
+        'bitcoin-gold': 0.001,
+        vertcoin: 0.1,
+        monacoin: 0.1,
+        feathercoin: 0.1,
+        zclassic: 0.001,
+    }
+
     tempPrices = [];
     tempWorkers = [];
     temp24hr = [];
-    backgroundColor = {
-        bitcoin: 'orange',
-        'bitcoin-gold': 'gold',
-        monacoin: 'lightyellow',
-        litecoin: 'silver',
-        ethereum: 'black',
-        vertcoin: 'green',
-        dash: 'cornflowerblue',
-        feathercoin: 'grey',
-        siacoin: 'springgreen',
-        zencash: 'orange',
-        zcash: 'orange',
-        zclassic: 'grey'
-    }
-    minPayout = {
-        dash: 0.01
-    }
 
     state = this.defaultState;
 
@@ -225,7 +244,8 @@ export default class Dashboard extends React.Component{
     }
 
     getRemaining = () => {
-        return this.getMinPayout() - this.sumTotal('total');
+        const remaining = this.getMinPayout() - this.sumTotal('total');
+        return remaining < 0 ? 0 : remaining;
     }
 
     getUnit(number){
@@ -336,10 +356,6 @@ export default class Dashboard extends React.Component{
             this.fetchData();
             this.fetchMining();
         } , 60000);
-
-        setTimeout(() => {
-            // this.setState(() => ({workers: [{username: 'samx', hashrate: 0.4, coin: 'bitcoin-gold'}]}))
-        }, 3000);
     }
 
     render(){
@@ -350,11 +366,19 @@ export default class Dashboard extends React.Component{
                     id={this.props.match.params.id}
                 />
 
+                <Balance
+                    pair={this.pair}
+                    readify={this.readify}
+                    getName={this.getName}
+                    sumTotal={this.sumTotal}
+                />
+
                 <Progress 
                     readify={this.readify}
                     sumTotal={this.sumTotal}
                     getMinPayout={this.getMinPayout}
                     getRemaining={this.getRemaining}
+                    backgroundColor={this.backgroundColor}
                 />
 
                 <Workers
@@ -383,13 +407,7 @@ export default class Dashboard extends React.Component{
                     pair={this.pair}
                     readify={this.readify}
                     getName={this.getName}
-                />
-
-                <Balance
-                    pair={this.pair}
-                    readify={this.readify}
-                    getName={this.getName}
-                    sumTotal={this.sumTotal}
+                    backgroundColor={this.backgroundColor}
                 />
 
                 <Distribution
