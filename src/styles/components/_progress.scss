@@ -2,7 +2,7 @@
     background: #fff;
     flex: 2;
     text-align: left;
-    margin: 2rem 4rem 2rem 4rem;
+    margin: $card-margin $card-margin*2 $card-margin $card-margin*2;
 }
 
 .progress h3{

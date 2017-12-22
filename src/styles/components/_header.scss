@@ -4,12 +4,12 @@
     flex-flow: row;
     flex-wrap: wrap;
     // height: 6rem;
-    margin-bottom: 2rem;
+    margin-bottom: $card-margin;
     padding-top: 2rem;
     // padding: 2rem 0rem 2rem 0rem;
     // padding: 2rem;
     // border-bottom: 1px solid #eee;
-    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.05);
+    // box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.05);
 }
 
 .header-title{
@@ -17,7 +17,7 @@
 }
 
 .header-title h2{
-    font-weight: 500;
+    // font-weight: 500;
 }
 
 

@@ -4,11 +4,11 @@ const Balance = (props) => (
     <div className="balance" >
         {
             !!props.sumTotal('total') ?
-            <h2>
+            <h3>
                 Total: ${props.readify(props.sumTotal('total'))}
-            </h2>
+            </h3>
             :
-            <p>Loading...</p>
+            <h3>Loading...</h3>
         }
         {
             // props.pair()

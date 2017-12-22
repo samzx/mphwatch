@@ -1,8 +1,7 @@
 .distribution{
     background: #fff;
     flex: 1;
-    // padding: 2rem;
-    margin: 2rem 4rem 4rem 2rem;
+    margin: $card-margin $card-margin*2 $card-margin*2 $card-margin;
 }
 
 .distribution h1, .distribution h2, .distribution h3{
@@ -14,10 +13,17 @@
     margin: auto;
 }
 
+@media (max-width: 1090px){
+    .distribution{
+        margin: 2rem 4rem 2rem 4rem;
+    }
+}
+
 @media (max-width: 600px){
     .distribution{
         margin: 1rem 0rem;
     }
+
     .distribution canvas{
         margin: auto;
     }

@@ -4,7 +4,7 @@ import { HorizontalBar } from 'react-chartjs-2';
 class Progress extends React.Component{
 
     getPercentage = () => {
-        return (this.props.sumTotal('total') / this.props.getMinPayout() * 100).toFixed(1);
+        return (this.props.sumTotal('total') / this.props.getMinPayout() * 100);
     }
 
     getProgressBarData = () => (
@@ -68,7 +68,10 @@ class Progress extends React.Component{
                 {
                     
                     <div>
-                        <h3> Payout Progress {this.getPercentage()}% </h3>
+                        <h2> 
+                            {"Payout Progress: "}
+                            { !!this.getPercentage() && (this.getPercentage().toFixed(1) + "%")} 
+                        </h2>
                         <HorizontalBar
                             height={document.body.clientWidth > 480 ? 15 : 40}
                             data={this.getProgressBarData()}

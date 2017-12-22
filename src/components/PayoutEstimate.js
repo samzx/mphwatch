@@ -24,7 +24,7 @@ class PayoutEstimate extends React.Component{
                         <p>Currency: {this.props.getPrimaryCoin() && this.props.getName(this.props.getPrimaryCoin().coin)} </p>
                     </div>
                     :
-                    <p>Loading</p>
+                    <p>Loading...</p>
                 }
             </div>
         );

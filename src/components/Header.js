@@ -4,7 +4,7 @@ import Balance from './Balance';
 const Header = (props) => (
     <div className="header">
         <div className="header-title" >
-            <h2> MPHStats </h2>
+            <h2> Dashboard </h2>
         </div>
 
 

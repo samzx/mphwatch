@@ -11,7 +11,7 @@ const Profit = (props) => (
                 <p key={`totalProfitMonthly`}> Monthly: ${`${props.readify(props.getTotalProfit() * 365 / 12 )}`} </p>
             </div>
             :
-            <p>Loading</p>
+            <p>Loading...</p>
         }
     </div>
 );

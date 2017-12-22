@@ -2,7 +2,8 @@ import React from 'react';
 
 export default class Landing extends React.Component{
     state = {
-        APIKey: ''
+        APIKey: '',
+        error: ''
     }
 
     verifyKey = (key) => {
@@ -45,7 +46,7 @@ export default class Landing extends React.Component{
         return (
             <div>
                 <div className="input-container">
-                <h1>Enter your API Key to get started</h1>
+                    <h1>Enter your API Key to get started</h1>
                     <form onSubmit={this.onSubmit}>
                         <input 
                             type="text"
@@ -60,6 +61,7 @@ export default class Landing extends React.Component{
                             }} 
                         />
                     </form>
+                    <p><b>{this.state.error}</b></p>
                 </div>
             </div>
         );

@@ -1,7 +1,8 @@
 .profit{
     background: #fff;
     flex: 1;
-    margin: 2rem;
+    margin: $card-margin;
+    border-top: 1rem solid green;
 }
 
 @media (max-width: 600px){

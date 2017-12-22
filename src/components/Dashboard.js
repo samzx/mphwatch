@@ -396,32 +396,34 @@ export default class Dashboard extends React.Component{
                         />
 
                     </div>
-
-                    <div className="row row--2" >                        
-                        <Workers
-                            workers={this.state.workers}
-                            getProfit={this.getProfit}
-                            getName={this.getName}
-                            readify={this.readify}
-                            getUnit={this.getUnit}
-                        />
-                        <Profit
-                            display={this.state.workers.length > 0}
-                            readify={this.readify}
-                            getTotalProfit={this.getTotalProfit}
-                        />
-                        <PayoutEstimate
-                            display={this.state.workers.length > 0}
-                            getRemainingTime={this.getRemainingTime}
-                            getRemaining={this.getRemaining}
-                            getTotalProfit={this.getTotalProfit}
-                            getName={this.getName}
-                            readify={this.readify}
-                            getPrimaryCoin={this.getPrimaryCoin}
-                            getMinPayout={this.getMinPayout}
-                        />
-
-                    </div>
+                    {
+                        this.state.workers.length > 0 &&
+                        <div className="row row--2" >                        
+                            <Workers
+                                workers={this.state.workers}
+                                getProfit={this.getProfit}
+                                getName={this.getName}
+                                readify={this.readify}
+                                getUnit={this.getUnit}
+                            />
+                            <Profit
+                                display={this.state.workers.length > 0}
+                                readify={this.readify}
+                                getTotalProfit={this.getTotalProfit}
+                            />
+                            <PayoutEstimate
+                                display={this.state.workers.length > 0}
+                                getRemainingTime={this.getRemainingTime}
+                                getRemaining={this.getRemaining}
+                                getTotalProfit={this.getTotalProfit}
+                                getName={this.getName}
+                                readify={this.readify}
+                                getPrimaryCoin={this.getPrimaryCoin}
+                                getMinPayout={this.getMinPayout}
+                            />
+    
+                        </div>
+                    }
 
                     <div className="row row--3" >                        
                         <HoldingsChart 

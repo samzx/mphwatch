@@ -24,7 +24,7 @@ const Workers = (props) => (
                 );
             })
             :
-            <p>Loading</p>
+            <p>Loading...</p>
         }
     </div>
 );

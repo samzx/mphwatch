@@ -1,15 +1,19 @@
 .sidebar{
     margin: 0rem;
     background-color: #fff;
-    width: 24rem;
+    width: 32rem;
     padding: 2rem;
     border-right: 1px solid #eee;
     // box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1);
     z-index: 2;
+    min-height: 100vh;
 }
 
 .sidebar h1{
     margin-top: 0rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
 }
 
 .sidebar h2{
