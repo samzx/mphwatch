@@ -1,0 +1,17 @@
+.dashboard{
+    display: flex;
+
+}
+
+.dashboard-main{
+    text-align: center;
+    margin: 0rem auto;
+    width: 100vw;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    flex-wrap: wrap;
+}

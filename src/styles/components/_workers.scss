@@ -1,0 +1,13 @@
+.workers{
+    background: #fff;
+    flex: 1;
+    overflow-y: scroll;
+    margin: 2rem;
+    margin-left: 4rem;
+}
+
+@media (max-width: 600px){
+    .workers{
+        margin: 1rem 0rem;
+    }
+}

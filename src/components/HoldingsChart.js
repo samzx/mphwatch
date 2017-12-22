@@ -3,35 +3,6 @@ import { Bar } from 'react-chartjs-2';
 
 class HoldingsChart extends React.Component{
 
-    getBarOptions = () => (
-        {
-            title: {
-                display: true,
-                text: 'Dollar Value (USD)',
-                position: 'top'
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        labelString: 'Dollar Value (USD)',
-                        display: true
-                    },
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-                    stacked: true,
-                    ticks: {
-                        beginAtZero: true
-                    },
-                }]
-            }
-        }
-    );
-
     getBarData = () => {
         const pairs = this.props.pair();
         // console.log(pairs);
@@ -61,14 +32,44 @@ class HoldingsChart extends React.Component{
         return data;
     }
 
+    getBarOptions = () => (
+        {
+            title: {
+                display: false,
+                text: 'Dollar Value (USD)',
+                position: 'top'
+            },
+            // responsive: false,
+            // maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        labelString: 'Dollar Value (USD)',
+                        display: false
+                    },
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    },
+                }]
+            }
+        }
+    );
+
     render(){
         return (
-            <div className="charts" >
-                <h1>Holdings</h1>
+            <div className="holdings charts" >
+                <h2>Holdings</h2>
                 <Bar
                     data={this.getBarData()}
-                    width={640}
-                    height={480}
+                    // width={document.body.clientWidth > 480? 480 : 300}
+                    // height={document.body.clientHeight > 480 ? 240 : 240}
                     options = {this.getBarOptions()}
                 />
 

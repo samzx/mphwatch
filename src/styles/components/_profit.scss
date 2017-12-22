@@ -1,0 +1,11 @@
+.profit{
+    background: #fff;
+    flex: 1;
+    margin: 2rem;
+}
+
+@media (max-width: 600px){
+    .profit{
+        margin: 1rem 0rem;
+    }
+}

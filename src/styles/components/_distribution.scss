@@ -1,0 +1,24 @@
+.distribution{
+    background: #fff;
+    flex: 1;
+    // padding: 2rem;
+    margin: 2rem 4rem 4rem 2rem;
+}
+
+.distribution h1, .distribution h2, .distribution h3{
+    padding-top: 0rem;
+    margin-top: 0rem;
+}
+
+.distribution canvas{
+    margin: auto;
+}
+
+@media (max-width: 600px){
+    .distribution{
+        margin: 1rem 0rem;
+    }
+    .distribution canvas{
+        margin: auto;
+    }
+}

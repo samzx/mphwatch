@@ -1,2 +1,16 @@
 @import './base/settings';
 @import './base/base';
+
+@import './components/dashboard';
+@import './components/_sidebar.scss';
+@import './components/_balance.scss';
+@import './components/_profit.scss';
+@import './components/_payout.scss';
+@import './components/_workers.scss';
+@import './components/_holdings.scss';
+@import './components/_progress.scss';
+@import './components/_distribution.scss';
+@import './components/header';
+@import './components/landing';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500');

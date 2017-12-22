@@ -1,11 +1,18 @@
 import React from 'react';
 
 const Profit = (props) => (
-    props.display && 
-    <div>
-        <h2 key={`totalProfitDaily`}> Total Daily: ${`${props.readify(props.getTotalProfit())}`} </h2>
-        <h3 key={`totalProfitWeekly`}> Total Weekly: ${`${props.readify(props.getTotalProfit() * 7)}`} </h3>
-        <h3 key={`totalProfitMonthly`}> Total Monthly: ${`${props.readify(props.getTotalProfit() * 365 / 12 )}`} </h3>
+    <div className="profit">
+        <h2> Earnings </h2>
+        {
+            props.display ?
+            <div>
+                <p key={`totalProfitDaily`}> Daily: ${`${props.readify(props.getTotalProfit())}`} </p>
+                <p key={`totalProfitWeekly`}> Weekly: ${`${props.readify(props.getTotalProfit() * 7)}`} </p>
+                <p key={`totalProfitMonthly`}> Monthly: ${`${props.readify(props.getTotalProfit() * 365 / 12 )}`} </p>
+            </div>
+            :
+            <p>Loading</p>
+        }
     </div>
 );
 

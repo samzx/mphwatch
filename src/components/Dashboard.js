@@ -1,6 +1,7 @@
 import React from 'react';
 import {Doughnut, Line, HorizontalBar, Bar, Pie} from 'react-chartjs-2';
 import { setTimeout } from 'timers';
+import Sidebar from './Sidebar';
 import Header from './Header';
 import Progress from './Progress';
 import HoldingsChart from './HoldingsChart';
@@ -164,7 +165,7 @@ export default class Dashboard extends React.Component{
 
             Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
             .then(() => {
-                console.log("promise fulfilled");
+                // console.log("promise fulfilled");
                 this.setState(() => ({amount24hr: this.temp24hr}));
                 this.temp24hr = [];
             })
@@ -219,7 +220,7 @@ export default class Dashboard extends React.Component{
                 maxPair = pair;
             }
         })
-
+        // console.log(maxPair);
         return maxPair;
     }
     get24hr = (coin) => {
@@ -345,11 +346,13 @@ export default class Dashboard extends React.Component{
         }
     }
 
-    componentWillMount(){
-        this.setState(() => ({ apiKey: this.props.match.params.id }));
+    setAPIKey = () => {
+        let apiKey = this.props.match.params.id;
+        apiKey = !!apiKey ? apiKey : '';
+        this.setState(() => ({ apiKey }));
     }
 
-    componentDidMount(){
+    beginFetch = () => {
         this.fetchData();
         this.fetchMining();
         setInterval(() => {
@@ -358,64 +361,85 @@ export default class Dashboard extends React.Component{
         } , 60000);
     }
 
+    componentWillMount(){
+        this.setAPIKey();
+    }
+
+    componentDidMount(){
+        this.beginFetch();
+    }
+
     render(){
         return (
-            <div style={{textAlign: 'center', margin: '5rem auto', maxWidth: 720 }}>
-                <Header 
+            <div className="dashboard" >
+            
+                <Sidebar 
                     error={this.state.error}
                     id={this.props.match.params.id}
+                    history={this.props.history}
                 />
+                <div className="dashboard-main" >
+                    <Header
+                        pair={this.pair}
+                        readify={this.readify}
+                        getName={this.getName}
+                        sumTotal={this.sumTotal}
+                    />
 
-                <Balance
-                    pair={this.pair}
-                    readify={this.readify}
-                    getName={this.getName}
-                    sumTotal={this.sumTotal}
-                />
+                    <div className="row row--1" >                                            
+                        <Progress 
+                            readify={this.readify}
+                            sumTotal={this.sumTotal}
+                            getMinPayout={this.getMinPayout}
+                            getRemaining={this.getRemaining}
+                            backgroundColor={this.backgroundColor}
+                        />
 
-                <Progress 
-                    readify={this.readify}
-                    sumTotal={this.sumTotal}
-                    getMinPayout={this.getMinPayout}
-                    getRemaining={this.getRemaining}
-                    backgroundColor={this.backgroundColor}
-                />
+                    </div>
 
-                <Workers
-                    workers={this.state.workers}
-                    getProfit={this.getProfit}
-                    getName={this.getName}
-                    readify={this.readify}
-                    getUnit={this.getUnit}
-                />
-                <Profit
-                    display={this.state.workers.length > 0}
-                    readify={this.readify}
-                    getTotalProfit={this.getTotalProfit}
-                />
+                    <div className="row row--2" >                        
+                        <Workers
+                            workers={this.state.workers}
+                            getProfit={this.getProfit}
+                            getName={this.getName}
+                            readify={this.readify}
+                            getUnit={this.getUnit}
+                        />
+                        <Profit
+                            display={this.state.workers.length > 0}
+                            readify={this.readify}
+                            getTotalProfit={this.getTotalProfit}
+                        />
+                        <PayoutEstimate
+                            display={this.state.workers.length > 0}
+                            getRemainingTime={this.getRemainingTime}
+                            getRemaining={this.getRemaining}
+                            getTotalProfit={this.getTotalProfit}
+                            getName={this.getName}
+                            readify={this.readify}
+                            getPrimaryCoin={this.getPrimaryCoin}
+                            getMinPayout={this.getMinPayout}
+                        />
 
-                <PayoutEstimate
-                    display={this.state.workers.length > 0}
-                    getRemainingTime={this.getRemainingTime}
-                    getRemaining={this.getRemaining}
-                    getTotalProfit={this.getTotalProfit}
-                    readify={this.readify}
-                    getMinPayout={this.getMinPayout}
-                />
+                    </div>
 
-                <HoldingsChart 
-                    pair={this.pair}
-                    readify={this.readify}
-                    getName={this.getName}
-                    backgroundColor={this.backgroundColor}
-                />
+                    <div className="row row--3" >                        
+                        <HoldingsChart 
+                            pair={this.pair}
+                            readify={this.readify}
+                            getName={this.getName}
+                            backgroundColor={this.backgroundColor}
+                        />
 
-                <Distribution
-                    pair={this.pair}
-                    get24hr={this.get24hr}
-                    getColor={this.getColor}
-                    getName={this.getName}
-                />
+                        <Distribution
+                            pair={this.pair}
+                            get24hr={this.get24hr}
+                            getColor={this.getColor}
+                            getName={this.getName}
+                        />
+                    </div>
+
+                </div>
             </div>
         );
     }

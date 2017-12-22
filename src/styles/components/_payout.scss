@@ -1,0 +1,12 @@
+.payout{
+    background: #fff;
+    flex: 1;
+    margin: 2rem;
+    margin-right: 4rem;
+}
+
+@media (max-width: 600px){
+    .payout{
+        margin: 1rem 0rem;
+    }
+}

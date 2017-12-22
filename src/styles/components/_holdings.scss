@@ -1,0 +1,25 @@
+.holdings{
+    background: #fff;
+    flex: 1;
+    // padding: 2rem;
+    margin: 2rem 2rem 4rem 4rem;
+}
+
+.holdings h1, .holdings h2, .holdings h3{
+    padding-top: 0rem;
+    margin-top: 0rem;
+}
+
+.holdings canvas{
+    margin: auto;
+}
+
+@media (max-width: 600px){
+    .holdings{
+        margin: 1rem 0rem;
+    }
+
+    .holdings canvas{
+        margin: auto;
+    }
+}

@@ -1,12 +1,14 @@
 import React from 'react';
 
 const Balance = (props) => (
-    <div>
+    <div className="balance" >
         {
-            !!props.sumTotal('total') && 
+            !!props.sumTotal('total') ?
             <h2>
                 Total: ${props.readify(props.sumTotal('total'))}
             </h2>
+            :
+            <p>Loading...</p>
         }
         {
             // props.pair()

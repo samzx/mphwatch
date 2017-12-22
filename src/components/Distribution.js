@@ -18,7 +18,8 @@ class Distribution extends React.Component{
 
     getDistributionOptions = () => (
         {
-            responsive: true,
+            // responsive: false,
+            // maintainAspectRatio: false,
             tooltips: {
                 callbacks: {
                     title: (tooltipItem, chart) => {return 'Dollar Value'},
@@ -30,12 +31,12 @@ class Distribution extends React.Component{
 
     render(){
         return (
-            <div className="charts" >
-                <h1> 24 Hour Credit Distribution</h1>
+            <div className="distribution charts" >
+                <h2> 24 Hour Credit Distribution</h2>
 
                 <Pie
-                    width={640}
-                    height={480}
+                    // width={document.body.clientWidth > 480 ? 480 : 300}
+                    // height={document.body.clientHeight > 480 ? 240 : 240}
                     data={this.getDistributionData()}
                     options = {this.getDistributionOptions()}
                 />
