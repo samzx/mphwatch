@@ -4,7 +4,7 @@
     overflow-y: scroll;
     margin: $card-margin;
     margin-left: $card-margin*2;
-    border-top: 1rem solid crimson;
+    border-top: 1rem solid #6C747F;
 
     // -ms-overflow-style: -ms-autohiding-scrollbar;
     // -ms-overflow-style: none;
@@ -14,7 +14,7 @@
     // display: none; 
 }
 
-@media (max-width: 600px){
+@media (max-width: 800px){
     .workers{
         margin: 1rem 0rem;
     }

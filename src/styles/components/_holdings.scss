@@ -13,13 +13,13 @@
     margin: auto;
 }
 
-@media (max-width: 1090px){
+@media (max-width: 768px){
     .holdings{
-        margin: 2rem 4rem 2rem 4rem;
+        // margin: 2rem 4rem 2rem 4rem;
     }
 }
 
-@media (max-width: 600px){
+@media (max-width: 800px){
     .holdings{
         margin: 1rem 0rem;
     }

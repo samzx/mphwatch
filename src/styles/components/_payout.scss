@@ -4,10 +4,10 @@
     margin: $card-margin;
     margin-right: $card-margin*2;
 
-    border-top: 1rem solid orange;
+    border-top: 1rem solid #6C747F;
 }
 
-@media (max-width: 600px){
+@media (max-width: 800px){
     .payout{
         margin: 1rem 0rem;
     }

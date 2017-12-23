@@ -2,14 +2,14 @@
 @import './base/base';
 
 @import './components/dashboard';
-@import './components/_sidebar.scss';
-@import './components/_balance.scss';
-@import './components/_profit.scss';
-@import './components/_payout.scss';
-@import './components/_workers.scss';
-@import './components/_holdings.scss';
-@import './components/_progress.scss';
-@import './components/_distribution.scss';
+@import './components/sidebar';
+@import './components/balance';
+@import './components/earnings';
+@import './components/payout';
+@import './components/workers';
+@import './components/holdings';
+@import './components/progress';
+@import './components/distribution';
 @import './components/header';
 @import './components/landing';
 

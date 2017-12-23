@@ -8,6 +8,7 @@ class Sidebar extends React.Component{
         showapi: false,
         showexchange: false,
         showdonation: false,
+        showmore: false,
     }
 
     render(){
@@ -16,7 +17,7 @@ class Sidebar extends React.Component{
                 <h1> MPH Stats </h1>
                 <div className="sidebar-contents">
                     <div>
-                        <h3>API Key</h3>
+                        <h3> API Key </h3>
                         <a onClick={() => {this.setState((prevState) => ({showapi: !prevState.showapi}))}} > Show </a>
                         {
                             this.state.showapi && 
@@ -28,7 +29,7 @@ class Sidebar extends React.Component{
                     </div>
         
                     <div>
-                        <h3> Exchange Currency</h3>
+                        <h3> Exchange Currency </h3>
                         <a onClick={() => {this.setState((prevState) => ({showexchange: !prevState.showexchange}))}} > Show </a>
                         {
                             this.state.showexchange && 
@@ -38,13 +39,23 @@ class Sidebar extends React.Component{
                         }
                     </div>
                     <div>
-                        <h3>BTC Donation</h3>
+                        <h3> BTC Donation </h3>
                         <a onClick={() => {this.setState((prevState) => ({showdonation: !prevState.showdonation}))}} > Show </a>
                         {
                             this.state.showdonation && 
                             <div>
                                 <p className="wrap" >3A9XhUksxvFf315ZZbzvTq6JeVtVYr7Xgv</p>
                                 <img src='https://chart.googleapis.com/chart?cht=qr&chl=3A9XhUksxvFf315ZZbzvTq6JeVtVYr7Xgv&chs=180x180&choe=UTF-8&chld=L|2' alt='' />
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <h3> More </h3>
+                        <a onClick={() => {this.setState((prevState) => ({showmore: !prevState.showmore}))}} > Show </a>
+                        {
+                            this.state.showmore && 
+                            <div>
+                                <p> This project is <a href="https://github.com/solexstudios/mphstats">open source</a> and made with ♥ </p>
                             </div>
                         }
                     </div>

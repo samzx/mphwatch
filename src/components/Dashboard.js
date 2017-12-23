@@ -9,7 +9,7 @@ import Balance from './Balance';
 import Distribution from './Distribution';
 import PayoutEstimate from './PayoutEstimate';
 import Workers from './Workers';
-import Profit from './Profit';
+import Earnings from './Earnings';
 import { push as Menu } from 'react-burger-menu';
 
 export default class Dashboard extends React.Component{
@@ -27,9 +27,9 @@ export default class Dashboard extends React.Component{
     }
 
     backgroundColor = {
-        confirmed: '#2E7D32',
-        exchange: '#FF9800',
-        unconfirmed: '#C62828',
+        confirmed: '#8CB8FF',
+        exchange: '#D9E7FF',
+        unconfirmed: '#aaa',
         bitcoin: '#FFE0B2',
         litecoin: '#F5F5F5',
         monero: '#FFCCBC',
@@ -387,62 +387,62 @@ export default class Dashboard extends React.Component{
                         getName={this.getName}
                         sumTotal={this.sumTotal}
                     />
+                    <div className="container dashboard-container">
+                        {
+                            this.state.workers.length > 0 &&
+                            <div className="row row--stats" >                        
+                                <Workers
+                                    workers={this.state.workers}
+                                    getProfit={this.getProfit}
+                                    getName={this.getName}
+                                    readify={this.readify}
+                                    getUnit={this.getUnit}
+                                />
+                                <Earnings
+                                    display={this.state.workers.length > 0}
+                                    readify={this.readify}
+                                    getTotalProfit={this.getTotalProfit}
+                                />
+                                <PayoutEstimate
+                                    display={this.state.workers.length > 0}
+                                    getRemainingTime={this.getRemainingTime}
+                                    getRemaining={this.getRemaining}
+                                    getTotalProfit={this.getTotalProfit}
+                                    getName={this.getName}
+                                    readify={this.readify}
+                                    getPrimaryCoin={this.getPrimaryCoin}
+                                    getMinPayout={this.getMinPayout}
+                                />
+        
+                            </div>
+                        }
 
-                    {
-                        this.state.workers.length > 0 &&
-                        <div className="row row--stats" >                        
-                            <Workers
-                                workers={this.state.workers}
-                                getProfit={this.getProfit}
-                                getName={this.getName}
+                        <div className="row row--progress" >                                            
+                            <Progress 
                                 readify={this.readify}
-                                getUnit={this.getUnit}
-                            />
-                            <Profit
-                                display={this.state.workers.length > 0}
-                                readify={this.readify}
-                                getTotalProfit={this.getTotalProfit}
-                            />
-                            <PayoutEstimate
-                                display={this.state.workers.length > 0}
-                                getRemainingTime={this.getRemainingTime}
-                                getRemaining={this.getRemaining}
-                                getTotalProfit={this.getTotalProfit}
-                                getName={this.getName}
-                                readify={this.readify}
-                                getPrimaryCoin={this.getPrimaryCoin}
+                                sumTotal={this.sumTotal}
                                 getMinPayout={this.getMinPayout}
+                                getRemaining={this.getRemaining}
+                                backgroundColor={this.backgroundColor}
                             />
-    
                         </div>
-                    }
 
-                    <div className="row row--progress" >                                            
-                        <Progress 
-                            readify={this.readify}
-                            sumTotal={this.sumTotal}
-                            getMinPayout={this.getMinPayout}
-                            getRemaining={this.getRemaining}
-                            backgroundColor={this.backgroundColor}
-                        />
+                        <div className="row row--graph" >                        
+                            <HoldingsChart 
+                                pair={this.pair}
+                                readify={this.readify}
+                                getName={this.getName}
+                                backgroundColor={this.backgroundColor}
+                            />
+
+                            <Distribution
+                                pair={this.pair}
+                                get24hr={this.get24hr}
+                                getColor={this.getColor}
+                                getName={this.getName}
+                            />
+                        </div>
                     </div>
-
-                    <div className="row row--graph" >                        
-                        <HoldingsChart 
-                            pair={this.pair}
-                            readify={this.readify}
-                            getName={this.getName}
-                            backgroundColor={this.backgroundColor}
-                        />
-
-                        <Distribution
-                            pair={this.pair}
-                            get24hr={this.get24hr}
-                            getColor={this.getColor}
-                            getName={this.getName}
-                        />
-                    </div>
-
                 </div>
             </div>
         );
