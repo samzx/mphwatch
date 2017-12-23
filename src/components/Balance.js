@@ -5,7 +5,7 @@ const Balance = (props) => (
         {
             !!props.sumTotal('total') ?
             <h3>
-                Total: ${props.readify(props.sumTotal('total'))}
+                Balance: ${props.readify(props.sumTotal('total'))}
             </h3>
             :
             <h3>Loading...</h3>

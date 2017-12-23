@@ -14,7 +14,7 @@ class PayoutEstimate extends React.Component{
                 <h2> Payout </h2>
                 {
                     this.props.display ?
-                    <div>
+                    <div style={{borderTop: '1px solid #eee'}} >
                         <p key={`totalTimeUntilPayout`}> 
                             {"Time until payout: "}
                             { this.timeBeforePayout().days + " days, "} 

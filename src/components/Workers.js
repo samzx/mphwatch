@@ -7,7 +7,7 @@ const Workers = (props) => (
             props.workers.length > 0 ?         
             props.workers.map(({hashrate, username, coin}) => {
                 return (
-                    <div key={`worker:${username}${coin}-div`}>
+                    <div key={`worker:${username}${coin}-div`} style={{borderTop: '1px solid #eee'}}>
                         <p key={`worker:${username}${coin}-user`} > 
                             Worker: {username}
                         </p>

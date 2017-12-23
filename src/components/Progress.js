@@ -58,7 +58,7 @@ class Progress extends React.Component{
                     }
                 }]
             },
-            // events: [],
+            events: [],
         }
     );
 

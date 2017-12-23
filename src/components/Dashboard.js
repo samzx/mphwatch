@@ -10,6 +10,7 @@ import Distribution from './Distribution';
 import PayoutEstimate from './PayoutEstimate';
 import Workers from './Workers';
 import Profit from './Profit';
+import { push as Menu } from 'react-burger-menu';
 
 export default class Dashboard extends React.Component{
     
@@ -371,14 +372,15 @@ export default class Dashboard extends React.Component{
 
     render(){
         return (
-            <div className="dashboard" >
-            
-                <Sidebar 
-                    error={this.state.error}
-                    id={this.props.match.params.id}
-                    history={this.props.history}
-                />
-                <div className="dashboard-main" >
+            <div className="dashboard" id="dashboard">
+                <Menu pageWrapId={ "dashboard-main" } outerContainerId={ "dashboard" } >
+                    <Sidebar 
+                        error={this.state.error}
+                        id={this.props.match.params.id}
+                        history={this.props.history}
+                    />
+                </Menu>
+                <div className="dashboard-main" id="dashboard-main">
                     <Header
                         pair={this.pair}
                         readify={this.readify}
@@ -386,19 +388,9 @@ export default class Dashboard extends React.Component{
                         sumTotal={this.sumTotal}
                     />
 
-                    <div className="row row--1" >                                            
-                        <Progress 
-                            readify={this.readify}
-                            sumTotal={this.sumTotal}
-                            getMinPayout={this.getMinPayout}
-                            getRemaining={this.getRemaining}
-                            backgroundColor={this.backgroundColor}
-                        />
-
-                    </div>
                     {
                         this.state.workers.length > 0 &&
-                        <div className="row row--2" >                        
+                        <div className="row row--stats" >                        
                             <Workers
                                 workers={this.state.workers}
                                 getProfit={this.getProfit}
@@ -425,7 +417,17 @@ export default class Dashboard extends React.Component{
                         </div>
                     }
 
-                    <div className="row row--3" >                        
+                    <div className="row row--progress" >                                            
+                        <Progress 
+                            readify={this.readify}
+                            sumTotal={this.sumTotal}
+                            getMinPayout={this.getMinPayout}
+                            getRemaining={this.getRemaining}
+                            backgroundColor={this.backgroundColor}
+                        />
+                    </div>
+
+                    <div className="row row--graph" >                        
                         <HoldingsChart 
                             pair={this.pair}
                             readify={this.readify}

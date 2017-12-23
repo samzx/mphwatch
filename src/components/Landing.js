@@ -3,7 +3,9 @@ import React from 'react';
 export default class Landing extends React.Component{
     state = {
         APIKey: '',
-        error: ''
+        remember: true,
+        error: '',
+        help: false
     }
 
     verifyKey = (key) => {
@@ -16,16 +18,18 @@ export default class Landing extends React.Component{
         .then((resp) => {
             // console.log(resp);
             if(resp.ok){
-                localStorage.setItem("apikey", this.state.APIKey);
+                if(this.state.remember){
+                    localStorage.setItem("apikey", this.state.APIKey);
+                }
                 this.props.history.push(`/${this.state.APIKey}`);
+            } else {
+                this.setState(() => ({error: 'Please enter a valid API Key'}));
             }
         })
         .then((data) => {
 
-
         }).catch((e) => {
             console.log(e);
-            this.setState(() => ({error: 'Please double check API Key'}));
         })
     }
 
@@ -44,10 +48,11 @@ export default class Landing extends React.Component{
 
     render(){
         return (
-            <div>
+            <div className="landing" >
                 <div className="input-container">
-                    <h1>Enter your API Key to get started</h1>
-                    <form onSubmit={this.onSubmit}>
+                    <h1 className="landing-title" >MPH Stats</h1>
+                    <h4>Enter your API Key to get started</h4>
+                    <form onSubmit={this.onSubmit} className="apiform" >
                         <input 
                             type="text"
                             className="input"
@@ -60,8 +65,29 @@ export default class Landing extends React.Component{
                                 this.setState(() => ({APIKey}))
                             }} 
                         />
+                        {
+                            !!this.state.error && <p style={{color: "crimson", padding: "0"}}><b>{this.state.error}</b></p>
+                        }
+                        <div>
+                            <input 
+                                defaultChecked={this.state.remember}
+                                type="checkbox" 
+                                value={this.state.remember} 
+                                id="remember"
+                                onChange={ (e) => {
+                                    this.setState((prevState) => ({remember: !prevState.remember}))
+                                }}/>
+                            <label htmlFor="remember">Remember Me</label>
+                        </div>
+                        <button className="landing-button" > Enter </button>
+                        <div style={{marginBottom: 0}}>
+                            <a className="landing-help" onClick={(prevState) => this.setState({help: !this.state.help})} >Help</a>
+                            {
+                                this.state.help && 
+                                <p>Visit <a href="https://miningpoolhub.com/?page=account&action=edit" target="_blank"> Mining pool hub</a> and paste the API key above</p>
+                            }
+                        </div>
                     </form>
-                    <p><b>{this.state.error}</b></p>
                 </div>
             </div>
         );

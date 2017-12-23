@@ -5,7 +5,7 @@ const Profit = (props) => (
         <h2> Earnings </h2>
         {
             props.display ?
-            <div>
+            <div style={{borderTop: '1px solid #eee'}} >
                 <p key={`totalProfitDaily`}> Daily: ${`${props.readify(props.getTotalProfit())}`} </p>
                 <p key={`totalProfitWeekly`}> Weekly: ${`${props.readify(props.getTotalProfit() * 7)}`} </p>
                 <p key={`totalProfitMonthly`}> Monthly: ${`${props.readify(props.getTotalProfit() * 365 / 12 )}`} </p>

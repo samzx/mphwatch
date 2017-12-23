@@ -6,12 +6,12 @@
     margin-left: $card-margin*2;
     border-top: 1rem solid crimson;
 
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    -ms-overflow-style: none;
+    // -ms-overflow-style: -ms-autohiding-scrollbar;
+    // -ms-overflow-style: none;
 }
 
 .workers::-webkit-scrollbar { 
-    display: none; 
+    // display: none; 
 }
 
 @media (max-width: 600px){

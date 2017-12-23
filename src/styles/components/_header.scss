@@ -1,5 +1,5 @@
 .header{
-    background-color: #fff;
+    background-color: #fafafa;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
@@ -8,12 +8,14 @@
     padding-top: 2rem;
     // padding: 2rem 0rem 2rem 0rem;
     // padding: 2rem;
-    // border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e0e0e0;
     // box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.05);
 }
 
 .header-title{
     flex: 1;
+    text-align: left;
+    margin-left: 2.4rem*3;
 }
 
 .header-title h2{
@@ -24,16 +26,11 @@
 @media (max-width: 600px){
     .header>*{
         // flex: 0 0 100% !important;
-        margin: 1rem 0rem;
+        // margin: 1rem 0rem;
     }
 
 
     .header-title h2{
         text-align: left;
-        margin-left: 5rem;
-    }
-
-    .header{
-        margin: 0rem 0rem 1rem 0rem;
     }
 }
