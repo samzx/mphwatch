@@ -10,17 +10,6 @@ const Balance = (props) => (
             :
             <h2>Loading...</h2>
         }
-        {
-            // props.pair()
-            // .map(({coin, confirmed, unconfirmed, ae_unconfirmed, total, price}, index) => {
-            //     return (
-            //         price && 
-            //         <div key={`balance-${index}`}>
-            //             {props.getName(coin)}: ${(total * price).toFixed(2)}
-            //         </div>
-            //     );
-            // })
-        }
     </div>
 );
 

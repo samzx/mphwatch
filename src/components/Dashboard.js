@@ -15,7 +15,7 @@ import { push as Menu } from 'react-burger-menu';
 export default class Dashboard extends React.Component{
     
     defaultState = {
-        apiKey: '', //'0bfbef832c137478240043c7d430815a940e19ddb481928cf51b811fc02297cd',
+        apiKey: '',
         balances: [],
         prices: [],
         mining: {},

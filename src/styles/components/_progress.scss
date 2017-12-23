@@ -1,15 +1,15 @@
 .progress{
     background: #fff;
     flex: 2;
-    text-align: left;
+    // text-align: left;
     margin: $card-margin $card-margin*2 $card-margin $card-margin*2;
 }
 
 .progress h1, .progress h2, .progress h3{
-    padding-top: 0rem;
-    padding-left: 1.5rem;
+    // padding-top: 0rem;
+    // padding-left: 1.5rem;
     margin-top: 1rem;
-    margin-bottom: 0.4rem;
+    // margin-bottom: 0.4rem;
 }
 
 @media (max-width: 800px){

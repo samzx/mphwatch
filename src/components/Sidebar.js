@@ -18,7 +18,9 @@ class Sidebar extends React.Component{
                 <div className="sidebar-contents">
                     <div>
                         <h3> API Key </h3>
-                        <a onClick={() => {this.setState((prevState) => ({showapi: !prevState.showapi}))}} > Show </a>
+                        <a onClick={() => {this.setState((prevState) => ({showapi: !prevState.showapi}))}} > 
+                            {this.state.showapi ? "Hide" : "Show"} 
+                        </a>
                         {
                             this.state.showapi && 
                             <div>
@@ -30,7 +32,9 @@ class Sidebar extends React.Component{
         
                     <div>
                         <h3> Exchange Currency </h3>
-                        <a onClick={() => {this.setState((prevState) => ({showexchange: !prevState.showexchange}))}} > Show </a>
+                        <a onClick={() => {this.setState((prevState) => ({showexchange: !prevState.showexchange}))}} > 
+                            {this.state.showexchange ? "Hide" : "Show"} 
+                        </a>
                         {
                             this.state.showexchange && 
                             <select>
@@ -40,7 +44,9 @@ class Sidebar extends React.Component{
                     </div>
                     <div>
                         <h3> BTC Donation </h3>
-                        <a onClick={() => {this.setState((prevState) => ({showdonation: !prevState.showdonation}))}} > Show </a>
+                        <a onClick={() => {this.setState((prevState) => ({showdonation: !prevState.showdonation}))}} >
+                            {this.state.showdonation ? "Hide" : "Show"} 
+                        </a>
                         {
                             this.state.showdonation && 
                             <div>
@@ -51,11 +57,13 @@ class Sidebar extends React.Component{
                     </div>
                     <div>
                         <h3> More </h3>
-                        <a onClick={() => {this.setState((prevState) => ({showmore: !prevState.showmore}))}} > Show </a>
+                        <a onClick={() => {this.setState((prevState) => ({showmore: !prevState.showmore}))}} >
+                            {this.state.showmore ? "Hide" : "Show"}
+                        </a>
                         {
                             this.state.showmore && 
                             <div>
-                                <p> This project is <a href="https://github.com/solexstudios/mphstats">open source</a> and made with ♥ </p>
+                                <p> This project is <a href="https://github.com/solexstudios/mphstats" target="_blank">open source.</a></p>
                             </div>
                         }
                     </div>
