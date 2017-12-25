@@ -5,13 +5,15 @@ export default class Landing extends React.Component{
         APIKey: '',
         remember: true,
         error: '',
-        help: false
+        help: false,
+        fetching: false
     }
 
     verifyKey = (key) => {
         const url = `https://miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${key}`;
         const proxyurl = 'https://stark-headland-49184.herokuapp.com/';
 
+        this.setState(() => ({fetching: true}));
         fetch(proxyurl + url, {
             method: "GET",
         })
@@ -25,18 +27,21 @@ export default class Landing extends React.Component{
             } else {
                 this.setState(() => ({error: 'Please enter a valid API Key'}));
             }
+            this.setState(() => ({fetching: false}));
         })
-        .then((data) => {
-
-        }).catch((e) => {
+        .catch((e) => {
             console.log(e);
+            this.setState(() => ({fetching: false}));
         })
+
     }
 
     onSubmit = (e) => {
         e.preventDefault();
         console.log(this.state.APIKey);
-        this.verifyKey(this.state.APIKey);
+        if(!this.state.fetching){
+            this.verifyKey(this.state.APIKey);
+        }
     }
 
     componentDidMount(){

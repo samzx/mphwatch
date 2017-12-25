@@ -8,6 +8,7 @@ body {
     font-size: $m-size;
     background-color: #f5f5f5;
     font-family: 'Roboto', sans-serif;
+    // font-family: 'Open Sans', sans-serif;
 }
 
 a {
@@ -16,7 +17,12 @@ a {
 }
 
 h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    // font-weight: 400;
+    // font-weight: 300;
+}
+
+p {
+    line-height: 2.5rem;
 }
 
 button {
@@ -37,4 +43,8 @@ canvas{
 .container{
     max-width: 108rem;
     margin: auto;
+}
+.logo{
+    margin: 0.5rem;
+    vertical-align: top;
 }

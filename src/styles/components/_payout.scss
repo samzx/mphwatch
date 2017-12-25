@@ -4,7 +4,11 @@
     margin: $card-margin;
     margin-right: $card-margin*2;
 
-    border-top: 1rem solid #6C747F;
+    border-top: 1rem solid #aaa;
+}
+
+.payout:hover{
+    border-top-color: #7093CC;
 }
 
 @media (max-width: 800px){

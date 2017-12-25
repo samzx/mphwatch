@@ -4,10 +4,14 @@
     overflow-y: scroll;
     margin: $card-margin;
     margin-left: $card-margin*2;
-    border-top: 1rem solid #6C747F;
+    border-top: 1rem solid #aaa;
 
     // -ms-overflow-style: -ms-autohiding-scrollbar;
     // -ms-overflow-style: none;
+}
+
+.workers:hover{
+    border-top-color: #7093CC;
 }
 
 .workers::-webkit-scrollbar { 

@@ -27,9 +27,10 @@ export default class Dashboard extends React.Component{
     }
 
     backgroundColor = {
-        confirmed: '#8CB8FF',
+        confirmed: '#7093CC',
         exchange: '#D9E7FF',
         unconfirmed: '#aaa',
+
         bitcoin: '#FFE0B2',
         litecoin: '#F5F5F5',
         monero: '#FFCCBC',
@@ -178,7 +179,7 @@ export default class Dashboard extends React.Component{
             })
 
         }).catch((e) => {
-            console.log(e);
+            // console.log(e);
             this.setState(() => ({error: 'Please double check API Key'}));
         })
     }
@@ -280,7 +281,8 @@ export default class Dashboard extends React.Component{
         const secondsPerDay = 86400;
         const coinsPerDay = coinPerSecond * secondsPerDay;
         const miningShare = hashrate * 1000 / nethash;
-        const dailyProfit = coinsPerDay * this.getPrice(coin) * miningShare;
+        const poolFee = 0.005;
+        const dailyProfit = coinsPerDay * this.getPrice(coin) * miningShare * (1 - poolFee);
         return { dailyProfit, algorithm };
     }
 
@@ -356,10 +358,6 @@ export default class Dashboard extends React.Component{
     beginFetch = () => {
         this.fetchData();
         this.fetchMining();
-        setInterval(() => {
-            this.fetchData();
-            this.fetchMining();
-        } , 60000);
     }
 
     componentWillMount(){
@@ -368,6 +366,9 @@ export default class Dashboard extends React.Component{
 
     componentDidMount(){
         this.beginFetch();
+        setInterval(() => {
+            this.beginFetch();
+        } , 600000);
     }
 
     render(){

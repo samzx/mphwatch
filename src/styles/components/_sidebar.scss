@@ -10,10 +10,29 @@
     // min-height: calc(100vh - 4rem);
     // display: none;
     // overflow: hidden;
+    // transition: all 10s ease-in-out;
 }
 
 .sidebar-contents>*{
   margin-bottom: 4rem;
+}
+
+
+.sidebar-item{
+  display: flex;
+  margin: 0rem;
+}
+
+.sidebar-item a{
+  margin: 2rem;
+}
+
+.sidebar-donations>*>a{
+  margin-right: 0rem;
+}
+
+.sidebar-donations>div{
+  margin-top: 2.2rem;
 }
 
 .sidebar h1{
@@ -51,8 +70,10 @@ $burger-size: 1.8rem;
   
   /* Color/shape of burger icon bars */
   .bm-burger-bars {
-    background: #465C7F;
+    background: #111;
     height: 15% !important;
+    // transition: opacity 0.3s ease-in-out;
+    opacity: 1 !important;
   }
   
   /* Position and sizing of clickable cross button */
@@ -70,7 +91,7 @@ $burger-size: 1.8rem;
   .bm-menu {
     background: #fff;
     padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
+    // font-size: 1.15em;
   }
   
   /* Morph shape necessary with bubble or elastic */

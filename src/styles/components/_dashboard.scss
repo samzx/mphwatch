@@ -24,9 +24,15 @@
 
 // ADD ICONS / SUBTITLES ? 
 .row>*{
+// *{
     // transition: box-shadow 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
+// *{
+//     transition: all 0.3s ease-in-out;
+// }
+
 .row>*:hover{
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.075);
     // transform: scale(1.01,1.01);

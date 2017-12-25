@@ -18,6 +18,9 @@ module.exports = {
                 'css-loader',
                 'sass-loader'
             ]
+        },{
+            test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,  //Before without fonts: /\.(png|jpg|svg)$/,
+            use: 'file-loader'
         }]
     },
     devtool: 'cheap-module-eval-source-map',
