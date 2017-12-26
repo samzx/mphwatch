@@ -47,7 +47,7 @@
         background: #fff;
         width: 32rem;
         margin: auto;
-        margin-top: 12rem;
+        margin-top: calc(100vh / 2 - 56rem / 2);
         padding-top: 6rem;
         box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.075);
     }

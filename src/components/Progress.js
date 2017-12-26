@@ -4,7 +4,8 @@ import { HorizontalBar } from 'react-chartjs-2';
 class Progress extends React.Component{
 
     getPercentage = () => {
-        return (this.props.sumTotal('total') / this.props.getMinPayout() * 100);
+        const percent = (this.props.sumTotal('total') / this.props.getMinPayout() * 100);
+        return percent > 100 ? 100 : percent;
     }
 
     getProgressBarData = () => (

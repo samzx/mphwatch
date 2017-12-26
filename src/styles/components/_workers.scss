@@ -5,6 +5,7 @@
     margin: $card-margin;
     margin-left: $card-margin*2;
     border-top: 1rem solid #aaa;
+    animation: displayBar $stats-row-spawn-time ease-in-out;
 
     // -ms-overflow-style: -ms-autohiding-scrollbar;
     // -ms-overflow-style: none;
@@ -21,5 +22,14 @@
 @media (max-width: 800px){
     .workers{
         margin: 1rem 0rem;
+    }
+}
+
+@keyframes displayBar {
+    0% {
+        overflow: hidden;
+    }
+    100% {
+        height: scroll;
     }
 }

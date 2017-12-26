@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "dev-server": "webpack-dev-server",
-    "upload": "scp -P21098 ./public/bundle.js ./public/index.html solengyh@solexstudios.com:mph.samxie.net",
+    "upload": "scp -P21098 ./public/bundle.js solengyh@solexstudios.com:mph.samxie.net",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "react-chartjs-2": "^2.6.4",
     "react-dom": "16.0.0",
     "react-router-dom": "^4.2.2",
+    "roboto-fontface": "^0.8.0",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
     "webpack": "3.1.0",

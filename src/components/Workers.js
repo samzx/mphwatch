@@ -12,10 +12,7 @@ const Workers = (props) => (
                             Worker: {username}
                         </p>
                         <p key={`worker:${username}${coin}-algorithm`} > 
-                            Algorithm: {props.getProfit(coin, hashrate).algorithm}
-                        </p>
-                        <p key={`worker:${username}${coin}-name`} > 
-                            Coin: {props.getName(coin)}
+                            Algorithm: {props.getProfit(coin, hashrate).algorithm} ({props.getName(coin)})
                         </p>
                         <p key={`worker:${username}${coin}-hashrate`} > 
                             Hashrate: {`${props.readify(props.getUnit(hashrate).value)} ${props.getUnit(hashrate).unit}`}
