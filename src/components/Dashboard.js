@@ -23,7 +23,8 @@ export default class Dashboard extends React.Component{
         remaining: 0,
         amount24hr: [],
         error: '',
-        proxyurl: 'https://stark-headland-49184.herokuapp.com/'
+        proxyurl: 'https://stark-headland-49184.herokuapp.com/',
+        info: false
     }
 
     backgroundColor = {
@@ -67,6 +68,10 @@ export default class Dashboard extends React.Component{
     temp24hr = [];
 
     state = this.defaultState;
+
+    handleInfoToggle = () => {
+        this.setState((prevState) => ({info: !prevState.info}))
+    }
 
     fetch24hr = (coin) => {
         const url = `https://${coin}.miningpoolhub.com/index.php?page=api&action=getdashboarddata&api_key=${this.state.apiKey}`;
@@ -387,6 +392,8 @@ export default class Dashboard extends React.Component{
                         readify={this.readify}
                         getName={this.getName}
                         sumTotal={this.sumTotal}
+                        info={this.state.info}
+                        handleInfoToggle={this.handleInfoToggle}
                     />
                     <div className="container dashboard-container">
                         {
@@ -398,11 +405,13 @@ export default class Dashboard extends React.Component{
                                     getName={this.getName}
                                     readify={this.readify}
                                     getUnit={this.getUnit}
+                                    info={this.state.info}
                                 />
                                 <Earnings
                                     display={this.state.workers.length > 0}
                                     readify={this.readify}
                                     getTotalProfit={this.getTotalProfit}
+                                    info={this.state.info}
                                 />
                                 <PayoutEstimate
                                     display={this.state.workers.length > 0}
@@ -413,6 +422,7 @@ export default class Dashboard extends React.Component{
                                     readify={this.readify}
                                     getPrimaryCoin={this.getPrimaryCoin}
                                     getMinPayout={this.getMinPayout}
+                                    info={this.state.info}
                                 />
         
                             </div>
@@ -425,6 +435,7 @@ export default class Dashboard extends React.Component{
                                 getMinPayout={this.getMinPayout}
                                 getRemaining={this.getRemaining}
                                 backgroundColor={this.backgroundColor}
+                                info={this.state.info}
                             />
                         </div>
 
@@ -434,6 +445,7 @@ export default class Dashboard extends React.Component{
                                 readify={this.readify}
                                 getName={this.getName}
                                 backgroundColor={this.backgroundColor}
+                                info={this.state.info}
                             />
 
                             <Distribution
@@ -441,6 +453,7 @@ export default class Dashboard extends React.Component{
                                 get24hr={this.get24hr}
                                 getColor={this.getColor}
                                 getName={this.getName}
+                                info={this.state.info}
                             />
                         </div>
                     </div>

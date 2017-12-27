@@ -1,7 +1,8 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import Card from './Card';
 
-class HoldingsChart extends React.Component{
+class HoldingsChart extends Card{
 
     getBarData = () => {
         const pairs = this.props.pair();
@@ -65,11 +66,16 @@ class HoldingsChart extends React.Component{
     render(){
         return (
             <div className="holdings charts" >
+                { super.renderInfo(
+                    <p>
+                        Balances of each coin are shown here. Coins on exchange are subject up to days
+                        before being successfully exchanged, so please be patient. You can click on the labels
+                        to exclude a given coin.
+                    </p>
+                ) }
                 <h2>Holdings</h2>
                 <Bar
                     data={this.getBarData()}
-                    // width={document.body.clientWidth > 480? 480 : 300}
-                    // height={document.body.clientHeight > 480 ? 240 : 240}
                     options = {this.getBarOptions()}
                 />
 

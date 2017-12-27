@@ -1,7 +1,8 @@
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
+import Card from './Card';
 
-class Progress extends React.Component{
+class Progress extends Card{
 
     getPercentage = () => {
         const percent = (this.props.sumTotal('total') / this.props.getMinPayout() * 100);
@@ -66,20 +67,23 @@ class Progress extends React.Component{
     render(){
         return (
             <div className="progress">
-                {
-                    
-                    <div>
-                        <h2> 
-                            {"Payout Progress: "}
-                            { !!this.getPercentage() && (this.getPercentage().toFixed(1) + "%")} 
-                        </h2>
-                        <HorizontalBar
-                            height={document.body.clientWidth > 480 ? 15 : 40}
-                            data={this.getProgressBarData()}
-                            options={this.getProgressBarOptions()}
-                        />
-                    </div>
-                }
+                { super.renderInfo(
+                    <p>
+                        Shows your progress until payout. By default this is set as your balance
+                        as a percentage of the minimum payout of your largest holding. Payout percentage
+                        is based on the total balance of your account, and assumes coins on auto-exchange are
+                        exchanged immediately.
+                    </p>
+                ) }
+                <h2> 
+                    {"Payout Progress: "}
+                    { !!this.getPercentage() && (this.getPercentage().toFixed(1) + "%")} 
+                </h2>
+                <HorizontalBar
+                    height={document.body.clientWidth > 480 ? 15 : 40}
+                    data={this.getProgressBarData()}
+                    options={this.getProgressBarOptions()}
+                />
               </div>
         );
     }

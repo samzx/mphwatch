@@ -1,0 +1,65 @@
+.info{
+    position: relative;
+    float: right;
+    font-size: 1.5rem !important;
+    color: $off-white;
+    transition: all 0.3s ease-in-out;
+    // color: transparent;
+}
+
+.info-toggle{
+    position: absolute;
+    top: 2.1rem;
+    right: 2.4rem;
+    font-size: 2.4rem !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-toggle:hover{
+    cursor: pointer;
+}
+
+.info:hover{
+    color: $primary-color;
+}
+
+.info-toggle--off{
+    color: #aaa;
+}
+
+.info-toggle--on{
+    color: $primary-color;
+}
+
+.description{
+    top: -2.5rem;
+    margin-right: 1.2rem;
+    position: absolute;
+    right: 100%;
+    width: 24rem;
+    background: white;
+    border: solid 0.1rem $primary-color;
+    border-right: solid 0.4rem $primary-color;
+    padding: 2rem;
+    animation: showDescription 0.3s;
+    z-index: 10;
+}
+
+.description-container::after{
+    content: "";
+    position: absolute;
+    top: -0.2rem;
+    right: 0.5rem;
+    border: 1rem solid transparent;
+    border-left-color: $primary-color;
+    animation: showDescription 0.3s;
+}
+
+@keyframes showDescription {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

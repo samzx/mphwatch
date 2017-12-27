@@ -1,6 +1,7 @@
 import React from 'react'
+import Card from './Card';
 
-class PayoutEstimate extends React.Component{
+class PayoutEstimate extends Card{
 
     timeBeforePayout = () => {
         return this.props.getRemainingTime(
@@ -10,7 +11,13 @@ class PayoutEstimate extends React.Component{
 
     render(){
         return (
-            <div className="payout" >
+            <div className="stats payout" >
+                { super.renderInfo(
+                    <p>
+                        Estimations are based on daily earnings until payout. You can select a different
+                        currency and payout amount in the settings section under the menu.
+                    </p>
+                )}
                 <h2> Payout </h2>
                 {
                     this.props.display ?

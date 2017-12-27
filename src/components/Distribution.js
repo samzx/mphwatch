@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pie, Doughnut } from 'react-chartjs-2';
+import Card from './Card';
 
-class Distribution extends React.Component{
+class Distribution extends Card{
 
     getDistributionData = () => {
         const pairs = this.props.pair();
@@ -18,8 +19,6 @@ class Distribution extends React.Component{
 
     getDistributionOptions = () => (
         {
-            // responsive: false,
-            // maintainAspectRatio: false,
             tooltips: {
                 callbacks: {
                     title: (tooltipItem, chart) => {return 'Dollar Value'},
@@ -32,11 +31,15 @@ class Distribution extends React.Component{
     render(){
         return (
             <div className="distribution charts" >
+                { super.renderInfo(
+                    <p>
+                        Distribution of coins are merely what has been credited to your wallet and
+                        does not include debits from auto exchange. That is it only accounts for what
+                        was given to you, not the net value.
+                    </p>
+                ) }
                 <h2> 24 Hour Credit Distribution</h2>
-
                 <Pie
-                    // width={document.body.clientWidth > 480 ? 480 : 300}
-                    // height={document.body.clientHeight > 480 ? 240 : 240}
                     data={this.getDistributionData()}
                     options = {this.getDistributionOptions()}
                 />

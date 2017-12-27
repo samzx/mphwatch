@@ -1,14 +1,5 @@
 .payout{
-    background: #fff;
-    flex: 1;
-    margin: $card-margin;
     margin-right: $card-margin*2;
-    overflow: hidden;
-    border-top: 1rem solid #aaa;
-}
-
-.payout:hover{
-    border-top-color: #7093CC;
 }
 
 @media (max-width: 800px){

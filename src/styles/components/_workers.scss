@@ -1,22 +1,12 @@
 .workers{
-    background: #fff;
-    flex: 1;
-    overflow-y: scroll;
-    margin: $card-margin;
     margin-left: $card-margin*2;
-    border-top: 1rem solid #aaa;
     animation: displayBar $stats-row-spawn-time ease-in-out;
-
-    // -ms-overflow-style: -ms-autohiding-scrollbar;
-    // -ms-overflow-style: none;
 }
 
-.workers:hover{
-    border-top-color: #7093CC;
-}
-
-.workers::-webkit-scrollbar { 
-    // display: none; 
+.workers-list{
+    overflow-y: scroll;
+    height: 14rem;
+    border: 0rem 1rem solid #eee;
 }
 
 @media (max-width: 800px){

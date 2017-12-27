@@ -12,9 +12,12 @@
 @import './components/distribution';
 @import './components/header';
 @import './components/landing';
+@import './components/info';
 
 @font-face {
     font-family: 'Roboto';
     src: url('../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-regular.scss');
 }
 
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";

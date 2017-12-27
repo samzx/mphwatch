@@ -1,29 +1,44 @@
 import React from 'react';
+import Card from './Card';
 
-const Workers = (props) => (
-    <div className="workers">
-        <h2>Workers</h2>
-        {   
-            props.workers.length > 0 ?         
-            props.workers.map(({hashrate, username, coin}) => {
-                return (
-                    <div key={`worker:${username}${coin}-div`} style={{borderTop: '1px solid #eee'}}>
-                        <p key={`worker:${username}${coin}-user`} > 
-                            Worker: {username}
-                        </p>
-                        <p key={`worker:${username}${coin}-algorithm`} > 
-                            Algorithm: {props.getProfit(coin, hashrate).algorithm} ({props.getName(coin)})
-                        </p>
-                        <p key={`worker:${username}${coin}-hashrate`} > 
-                            Hashrate: {`${props.readify(props.getUnit(hashrate).value)} ${props.getUnit(hashrate).unit}`}
-                        </p>
+class Workers extends Card{
+    render(){
+        return (
+            <div className="stats workers">
+                { super.renderInfo(
+                    <p>
+                        Worker data pulled from miningpoolhub api. Hashrate is given by what was recorded.
+                        You may see multiple workers despite only having one, which is normal.
+                    </p>
+                ) }
+                <h2>Workers</h2>
+                {   
+                    this.props.workers.length > 0 ?
+                    <div className="workers-list">
+                    {
+                        this.props.workers.map(({hashrate, username, coin}) => {
+                            return (
+                                <div key={`worker:${username}${coin}-div`} style={{borderTop: '1px solid #eee'}}>
+                                    <p key={`worker:${username}${coin}-user`} > 
+                                        Worker: {username}
+                                    </p>
+                                    <p key={`worker:${username}${coin}-algorithm`} > 
+                                        Algorithm: {this.props.getProfit(coin, hashrate).algorithm} ({this.props.getName(coin)})
+                                    </p>
+                                    <p key={`worker:${username}${coin}-hashrate`} > 
+                                        Hashrate: {`${this.props.readify(this.props.getUnit(hashrate).value)} ${this.props.getUnit(hashrate).unit}`}
+                                    </p>
+                                </div>
+                            );
+                        })
+                    }
                     </div>
-                );
-            })
-            :
-            <p>Loading...</p>
-        }
-    </div>
-);
+                    :
+                    <p>Loading...</p>
+                }
+            </div>
+        );
+    }
+}
 
 export default Workers;
