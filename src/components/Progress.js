@@ -72,7 +72,8 @@ class Progress extends Card{
                         Shows your progress until payout. By default this is set as your balance
                         as a percentage of the minimum payout of your largest holding. Payout percentage
                         is based on the total balance of your account, and assumes coins on auto-exchange are
-                        exchanged immediately.
+                        exchanged immediately. Light tint represents coins that are being exchanged, while the
+                        darker tint represents confirmed balances.
                     </p>
                 ) }
                 <h2> 

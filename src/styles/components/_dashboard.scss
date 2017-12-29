@@ -22,14 +22,13 @@
 }
 
 .row>*{
-    transition: all 0.3s ease-in-out;
+    transition: all $default-animation-time ease-in-out;
 }
 
 .stats{
     background: #fff;
     flex: 1;
     margin: $card-margin;
-    // overflow-y: scroll;
     border-top: 1rem solid #aaa;
 }
 

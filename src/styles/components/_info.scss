@@ -3,8 +3,7 @@
     float: right;
     font-size: 1.5rem !important;
     color: $off-white;
-    transition: all 0.3s ease-in-out;
-    // color: transparent;
+    transition: all $default-animation-time ease-in-out;
 }
 
 .info-toggle{
@@ -12,7 +11,7 @@
     top: 2.1rem;
     right: 2.4rem;
     font-size: 2.4rem !important;
-    transition: all 0.3s ease-in-out;
+    transition: all $default-animation-time ease-in-out;
 }
 
 .info-toggle:hover{
@@ -31,6 +30,10 @@
     color: $primary-color;
 }
 
+.info--on, .info--off{
+    transition: all $default-animation-time ease-in-out;
+}
+
 .description{
     top: -2.5rem;
     margin-right: 1.2rem;
@@ -41,7 +44,7 @@
     border: solid 0.1rem $primary-color;
     border-right: solid 0.4rem $primary-color;
     padding: 2rem;
-    animation: showDescription 0.3s;
+    animation: showDescription $default-animation-time;
     z-index: 10;
 }
 
@@ -52,7 +55,7 @@
     right: 0.5rem;
     border: 1rem solid transparent;
     border-left-color: $primary-color;
-    animation: showDescription 0.3s;
+    animation: showDescription $default-animation-time;
 }
 
 @keyframes showDescription {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from './Loading';
 
 export default class Landing extends React.Component{
     state = {
@@ -56,7 +57,17 @@ export default class Landing extends React.Component{
             <div className="landing" >
                 <div className="input-container">
                     <h1 className="landing-title" >MPH Stats</h1>
-                    <h4>Enter your API Key to get started</h4>
+                    {
+                        this.state.fetching ? 
+                        <Loading />
+                        :
+                        (
+                            !!this.state.error ?
+                            <h4 style={{color: "crimson", padding: "0"}}>{this.state.error}</h4>
+                            :
+                            <h4> Enter your API Key to get started </h4>
+                        )
+                    }
                     <form onSubmit={this.onSubmit} className="apiform" >
                         <input 
                             type="text"
@@ -70,9 +81,6 @@ export default class Landing extends React.Component{
                                 this.setState(() => ({APIKey}))
                             }} 
                         />
-                        {
-                            !!this.state.error && <p style={{color: "crimson", padding: "0"}}><b>{this.state.error}</b></p>
-                        }
                         <div>
                             <input 
                                 defaultChecked={this.state.remember}

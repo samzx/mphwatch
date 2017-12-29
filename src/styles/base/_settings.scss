@@ -2,18 +2,21 @@
 //https://color.adobe.com/create/color-wheel/?base=2&rule=Monochromatic&selected=0&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.2753455305285142,0.3609574837332914,0.5,0.8506910610570283,0.9075901288739856,1,0.5506910610570284,0.7219149674665828,1,0.42534553052851415,0.4537950644369928,0.5,0.44055284884562274,0.5775319739732663,0.8&swatchOrder=0,1,2,3,4
 
 // Spacing
-
 $s-size: 1.2rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 4.8rem;
 $desktop-breakpoint: 45rem;
 
+// Colors
 $primary-color: #7093CC;
 $off-white: #aaa;
 $almost-white: #eee;
 $white: #fff;
 
+// Margins
 $card-margin: 1rem;
 
+// Time
 $stats-row-spawn-time: 0.6s;
+$default-animation-time: 0.3s;
