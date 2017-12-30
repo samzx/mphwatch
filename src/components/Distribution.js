@@ -9,7 +9,9 @@ class Distribution extends Card{
         let data = { 
             datasets: [
                 { 
-                    data: pairs.map((pair) => (pair.price * this.props.get24hr(pair.coin)).toFixed(2)),
+                    data: pairs
+                        .sort((a,b) => (this.props.get24hr(b.coin) * b.price - this.props.get24hr(a.coin) * a.price))
+                        .map((pair) => (pair.price * this.props.get24hr(pair.coin)).toFixed(2)),
                     backgroundColor: pairs.map((pair) => this.props.getColor(pair.coin))
                 }],
             labels: pairs.map((pair) => this.props.getName(pair.coin))
