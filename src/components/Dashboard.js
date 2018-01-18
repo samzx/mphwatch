@@ -24,7 +24,9 @@ export default class Dashboard extends React.Component{
         amount24hr: [],
         error: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/',
-        info: false
+        info: false,
+        minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
+        customPayout: localStorage.getItem("custom") ? localStorage.getItem("custom") :  false
     }
 
     backgroundColor = {
@@ -189,6 +191,18 @@ export default class Dashboard extends React.Component{
         })
     }
 
+    setMinPayOut = (minPayout) => {
+        this.setState(() => ({
+            minPayout
+        }));
+    }
+
+    setCustomPayOut = (customPayout) => {
+        this.setState(() => ({
+            customPayout
+        }))
+    }
+
     getPrice = (coin) => {
         const items = this.state.prices.filter((price) => {
             return price.id == coin;
@@ -230,6 +244,7 @@ export default class Dashboard extends React.Component{
         // console.log(maxPair);
         return maxPair;
     }
+
     get24hr = (coin) => {
         if(this.state.amount24hr.length > 0){
             const coinObj = this.state.amount24hr.filter((obj) => {
@@ -246,12 +261,19 @@ export default class Dashboard extends React.Component{
     getMinPayout = () => {
         const maxPair = this.getPrimaryCoin();
         if(maxPair){
-            const target = this.minPayout[maxPair.coin] * maxPair.price
+            let target = 0;
+            if(this.state.customPayout){
+                target =  this.state.minPayout * maxPair.price;
+            } else {
+                target = this.minPayout[maxPair.coin] * maxPair.price;
+            }
             return target;
         }
     }
 
     getRemaining = () => {
+        // If custom, else get min payout
+
         const remaining = this.getMinPayout() - this.sumTotal('total');
         return remaining < 0 ? 0 : remaining;
     }
@@ -384,6 +406,9 @@ export default class Dashboard extends React.Component{
                         error={this.state.error}
                         id={this.props.match.params.id}
                         history={this.props.history}
+                        setMinPayOut={this.setMinPayOut}
+                        setCustomPayOut={this.setCustomPayOut}
+                        minPayout={this.state.minPayout}
                     />
                 </Menu>
                 <div className="dashboard-main" id="dashboard-main">

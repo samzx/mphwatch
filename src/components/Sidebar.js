@@ -15,6 +15,7 @@ class Sidebar extends React.Component{
         showSettings: false,
         showDonation: '',
         showMore: false,
+        payout: "autopay"
     }
 
     getDonation = (donation) => {
@@ -101,10 +102,35 @@ class Sidebar extends React.Component{
                                 </select>
 
                                 <h4> Automatic Payout Threshold </h4>
-                                <select>
+                                <select
+                                    onChange={(e) => {
+                                        const option = e.target.value;
+                                        this.setState(() => ({
+                                            payout: option
+                                        }));
+                                        if(option == "custom"){
+                                            this.props.setCustomPayOut(true);
+                                            localStorage.setItem("custom", true);
+                                        } else {
+                                            this.props.setCustomPayOut(false);
+                                            localStorage.setItem("custom", false);
+                                        }
+                                    }}
+                                >
                                     <option value="autopay" key={"autopay-auto"}> Auto (Min payout)</option>
                                     <option value="custom" key={"autopay-custom"}> Custom </option>
                                 </select>
+                                {
+                                    this.state.payout == "custom" &&
+                                    <input type="number"
+                                        value={this.props.minPayout}
+                                        onChange={(e) => {
+                                            const amount = e.target.value;
+                                            this.props.setMinPayOut(amount);
+                                            localStorage.setItem("payout", amount);
+                                        }}
+                                    />
+                                }
 
                             </div>
                         }
