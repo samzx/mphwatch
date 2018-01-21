@@ -15,7 +15,7 @@ class Sidebar extends React.Component{
         showSettings: false,
         showDonation: '',
         showMore: false,
-        payout: "autopay"
+        payout: JSON.parse(localStorage.getItem("custom")) ? "custom" : "autopay"
     }
 
     getDonation = (donation) => {
@@ -92,13 +92,17 @@ class Sidebar extends React.Component{
                                 <h4>Currency display</h4>
                                 <select>
                                     <option value="usd" key={"curdisp-usd"}> USD </option>
-                                    <option value="btc" key={"curdisp-btc"}> BTC </option>
+                                    {
+                                        // <option value="btc" key={"curdisp-btc"}> BTC </option>
+                                    }
                                 </select>
 
                                 <h4>Auto Exchange Currency</h4>
                                 <select>
-                                    <option value="auto" key={"autoex-auto"}> Auto (max holding)</option>
-                                    <option value="dash" key={"autoex-dash"}> Dash </option>
+                                    <option value="auto" key={"autoex-auto"}> Auto detect (max holding)</option>
+                                    {
+                                        // <option value="dash" key={"autoex-dash"}> Dash </option>
+                                    }
                                 </select>
 
                                 <h4> Automatic Payout Threshold </h4>
@@ -116,9 +120,14 @@ class Sidebar extends React.Component{
                                             localStorage.setItem("custom", false);
                                         }
                                     }}
+                                    defaultValue={this.state.payout}
                                 >
-                                    <option value="autopay" key={"autopay-auto"}> Auto (Min payout)</option>
-                                    <option value="custom" key={"autopay-custom"}> Custom </option>
+                                    <option value="autopay" key={"autopay-auto"}> 
+                                        Auto (Min payout)
+                                    </option>
+                                    <option value="custom" key={"autopay-custom"}>
+                                        Custom
+                                    </option>
                                 </select>
                                 {
                                     this.state.payout == "custom" &&
@@ -131,7 +140,6 @@ class Sidebar extends React.Component{
                                         }}
                                     />
                                 }
-
                             </div>
                         }
                     

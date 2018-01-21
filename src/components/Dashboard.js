@@ -26,7 +26,7 @@ export default class Dashboard extends React.Component{
         proxyurl: 'https://stark-headland-49184.herokuapp.com/',
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
-        customPayout: localStorage.getItem("custom") ? localStorage.getItem("custom") :  false
+        customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false
     }
 
     backgroundColor = {
@@ -63,6 +63,19 @@ export default class Dashboard extends React.Component{
         monacoin: 0.1,
         feathercoin: 0.1,
         zclassic: 0.001,
+    }
+
+    conversions ={
+        aud: {
+            rate: 0.8, // Fetch
+            pre: "$",
+            post: "AUD"
+        },
+        btc: {
+            rate: 13000,
+            pre: "",
+            post: "BTC"
+        }
     }
 
     tempPrices = [];
@@ -331,6 +344,11 @@ export default class Dashboard extends React.Component{
         return {days, hours, delta};
     }
 
+    getConversion = () => {
+        const aud = 0.8;
+        return 1 / aud;
+    }
+
     pair = () => {
         const pairs = this.state.balances.map(({coin, confirmed, ae_unconfirmed, unconfirmed}, index) => {
             return {
@@ -339,7 +357,7 @@ export default class Dashboard extends React.Component{
                 ae_unconfirmed,
                 unconfirmed,
                 total: confirmed + ae_unconfirmed + unconfirmed,
-                price: this.getPrice(coin)
+                price: this.getPrice(coin) * this.getConversion()
             }
         }).sort((a,b) => {
             return b.price * b.total - a.price * a.total;
@@ -479,6 +497,7 @@ export default class Dashboard extends React.Component{
                                 getColor={this.getColor}
                                 getName={this.getName}
                                 info={this.state.info}
+                                readify={this.readify}
                             />
                         </div>
                     </div>
