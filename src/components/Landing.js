@@ -28,7 +28,7 @@ export default class Landing extends React.Component{
             } else {
                 this.setState(() => ({error: 'Please enter a valid API Key'}));
             }
-            this.setState(() => ({fetching: false}));
+            // this.setState(() => ({fetching: false}));
         })
         .catch((e) => {
             console.log(e);

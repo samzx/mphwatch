@@ -308,10 +308,9 @@ export default class Dashboard extends React.Component{
     }
 
     getProfit = (coin, hashrate) => {
-        // console.log(this.state.mining);
         let Key;
         Object.keys(this.state.mining).filter((key) => {
-            if(key.toLowerCase().match(coin.replace('-', ''))){
+            if(key.toLowerCase() == coin.replace('-', '')){
                 Key = key;
             }
         })
