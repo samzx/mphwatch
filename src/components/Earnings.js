@@ -16,9 +16,9 @@ class Earnings extends Card{
                 {
                     this.props.display ?
                     <div style={{borderTop: '1px solid #eee'}} >
-                        <p key={`totalProfitDaily`}> Daily: ${`${this.props.readify(this.props.getTotalProfit())}`} </p>
-                        <p key={`totalProfitWeekly`}> Weekly: ${`${this.props.readify(this.props.getTotalProfit() * 7)}`} </p>
-                        <p key={`totalProfitMonthly`}> Monthly: ${`${this.props.readify(this.props.getTotalProfit() * 365 / 12 )}`} </p>
+                        <p key={`totalProfitDaily`}> Daily: {this.props.conversion.pre}{`${this.props.readify(this.props.getTotalProfit(), this.props.conversion.decimals)}`} </p>
+                        <p key={`totalProfitWeekly`}> Weekly: {this.props.conversion.pre}{`${this.props.readify(this.props.getTotalProfit() * 7, this.props.conversion.decimals)}`} </p>
+                        <p key={`totalProfitMonthly`}> Monthly: {this.props.conversion.pre}{`${this.props.readify(this.props.getTotalProfit() * 365 / 12, this.props.conversion.decimals)}`} </p>
                     </div>
                     :
                     <p>Loading...</p>

@@ -11,7 +11,7 @@ class Distribution extends Card{
                 { 
                     data: pairs
                         .sort((a,b) => (this.props.get24hr(b.coin) * b.price - this.props.get24hr(a.coin) * a.price))
-                        .map((pair) => this.props.readify(pair.price * this.props.get24hr(pair.coin))),
+                        .map((pair) => this.props.readify(pair.price * this.props.get24hr(pair.coin), this.props.conversion.decimals)),
                     backgroundColor: pairs.map((pair) => this.props.getColor(pair.coin))
                 }],
             labels: pairs.map((pair) => this.props.getName(pair.coin))

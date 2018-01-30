@@ -27,7 +27,7 @@ class PayoutEstimate extends Card{
                             { this.timeBeforePayout().days } { this.timeBeforePayout().days == 1 ? " day, " : " days, "} 
                             { this.timeBeforePayout().hours + " hours" } 
                         </p>
-                        <p> Amount: ${this.props.readify(this.props.getMinPayout())}</p>
+                        <p> Amount: {this.props.conversion.pre}{this.props.readify(this.props.getMinPayout(), this.props.conversion.decimals)}</p>
                         <p> Payment: {this.props.getPrimaryCoin() && this.props.getName(this.props.getPrimaryCoin().coin)} </p>
                     </div>
                     :

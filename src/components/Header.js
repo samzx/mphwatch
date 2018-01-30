@@ -14,6 +14,7 @@ class Header extends React.Component{
                         readify={this.props.readify}
                         getName={this.props.getName}
                         sumTotal={this.props.sumTotal}
+                        conversion={this.props.conversion}
                     />
                 </div>
             </div>

@@ -7,7 +7,7 @@ const Balance = (props) => (
             Balance:
                 {
                     !!props.sumTotal('total') &&
-                    " $" + props.readify(props.sumTotal('total')) + " AUD"
+                    ` ${props.conversion.pre}` + props.readify(props.sumTotal('total'), props.conversion.decimals) + ` ${props.conversion.post}`
                 }
             </h2>
         }

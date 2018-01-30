@@ -22,6 +22,7 @@ export default class Dashboard extends React.Component{
         workers: [],
         remaining: 0,
         amount24hr: [],
+        conversion: "btc",
         error: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/',
         info: false,
@@ -69,12 +70,26 @@ export default class Dashboard extends React.Component{
         aud: {
             rate: 0.8, // Fetch
             pre: "$",
-            post: "AUD"
+            post: "AUD",
+            decimals: 2
+        },
+        usd: {
+            rate: 1,
+            pre: "$",
+            post: "USD",
+            decimals: 2
         },
         btc: {
             rate: 13000,
             pre: "",
-            post: "BTC"
+            post: "BTC",
+            decimals: 6
+        },
+        undefined: {
+            rate: 1,
+            pre: "",
+            post: "",
+            decimals: 2
         }
     }
 
@@ -221,7 +236,7 @@ export default class Dashboard extends React.Component{
             return price.id == coin;
         });
         if( items.length == 1){
-            return parseFloat(items[0].price_usd);
+            return parseFloat(items[0].price_usd) * this.getConversion();
         }
     }
 
@@ -343,9 +358,11 @@ export default class Dashboard extends React.Component{
         return {days, hours, delta};
     }
 
+    // TODO: IMPLEMENT CURRENCY CONVERSIONS
     getConversion = () => {
-        const aud = 0.8;
-        return 1 / aud;
+        const conversion = this.conversions[this.state.conversion];
+        const rate = conversion.rate;
+        return 1 / rate;
     }
 
     pair = () => {
@@ -356,7 +373,7 @@ export default class Dashboard extends React.Component{
                 ae_unconfirmed,
                 unconfirmed,
                 total: confirmed + ae_unconfirmed + unconfirmed,
-                price: this.getPrice(coin) * this.getConversion()
+                price: this.getPrice(coin) //* this.getConversion()
             }
         }).sort((a,b) => {
             return b.price * b.total - a.price * a.total;
@@ -387,9 +404,13 @@ export default class Dashboard extends React.Component{
         return sum;
     }
 
-    readify(number){
+    readify(number, decimals = 2){
         if(number){
-            return number.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            console.log(this.state);
+            return number.toLocaleString( undefined, { 
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
         }
     }
 
@@ -436,6 +457,7 @@ export default class Dashboard extends React.Component{
                         sumTotal={this.sumTotal}
                         info={this.state.info}
                         handleInfoToggle={this.handleInfoToggle}
+                        conversion={this.conversions[this.state.conversion]}
                     />
                     <div className="container dashboard-container">
                         {
@@ -454,6 +476,7 @@ export default class Dashboard extends React.Component{
                                     readify={this.readify}
                                     getTotalProfit={this.getTotalProfit}
                                     info={this.state.info}
+                                    conversion={this.conversions[this.state.conversion]}
                                 />
                                 <PayoutEstimate
                                     display={this.state.workers.length > 0}
@@ -465,6 +488,7 @@ export default class Dashboard extends React.Component{
                                     getPrimaryCoin={this.getPrimaryCoin}
                                     getMinPayout={this.getMinPayout}
                                     info={this.state.info}
+                                    conversion={this.conversions[this.state.conversion]}
                                 />
         
                             </div>
@@ -488,6 +512,7 @@ export default class Dashboard extends React.Component{
                                 getName={this.getName}
                                 backgroundColor={this.backgroundColor}
                                 info={this.state.info}
+                                conversion={this.conversions[this.state.conversion]}
                             />
 
                             <Distribution
@@ -497,6 +522,7 @@ export default class Dashboard extends React.Component{
                                 getName={this.getName}
                                 info={this.state.info}
                                 readify={this.readify}
+                                conversion={this.conversions[this.state.conversion]}
                             />
                         </div>
                     </div>

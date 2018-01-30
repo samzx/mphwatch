@@ -12,19 +12,19 @@ class HoldingsChart extends Card{
                 {
                     // Confirmed
                     label: 'Confirmed',
-                    data: pairs.map((pair) => this.props.readify(pair.confirmed * pair.price)) ,
+                    data: pairs.map((pair) => this.props.readify(pair.confirmed * pair.price, this.props.conversion.decimals)) ,
                     backgroundColor: this.props.backgroundColor.confirmed
                 },
                 {
                     // On exchange
                     label: 'On exchange',
-                    data: pairs.map((pair) => this.props.readify(pair.ae_unconfirmed * pair.price)),
+                    data: pairs.map((pair) => this.props.readify(pair.ae_unconfirmed * pair.price, this.props.conversion.decimals)),
                     backgroundColor: this.props.backgroundColor.exchange
                 },
                 {
                     // Unconfirmed
                     label: 'Unconfirmed',
-                    data: pairs.map((pair) => this.props.readify(pair.unconfirmed * pair.price)),
+                    data: pairs.map((pair) => this.props.readify(pair.unconfirmed * pair.price, this.props.conversion.decimals)),
                     backgroundColor: this.props.backgroundColor.unconfirmed
                 },
             ],
