@@ -131,10 +131,13 @@ class Sidebar extends React.Component{
                                 </select>
                                 {
                                     this.state.payout == "custom" &&
-                                    <input type="number"
+                                    <input 
+                                        type="number"
+                                        className="custom-payout-input"
                                         value={this.props.minPayout}
                                         onChange={(e) => {
-                                            const amount = e.target.value;
+                                            let amount = e.target.value;
+                                            amount = amount > 0 ? amount : 0;
                                             this.props.setMinPayOut(amount);
                                             localStorage.setItem("payout", amount);
                                         }}

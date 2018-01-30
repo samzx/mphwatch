@@ -34,6 +34,14 @@
     word-wrap: break-word;      /* IE */
 }
 
+.custom-payout-input{
+  border: 0.1rem solid $almost-white;
+  margin: $s-size 0 $s-size 0;
+  height: $m-size;
+  padding: $s-size/2  0 $s-size/2 $s-size/2;
+  width: 20rem;
+}
+
 
 /* BURGER BUTTON */
 
