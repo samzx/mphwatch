@@ -15,7 +15,8 @@ class Sidebar extends React.Component{
         showSettings: false,
         showDonation: '',
         showMore: false,
-        payout: JSON.parse(localStorage.getItem("custom")) ? "custom" : "autopay"
+        payout: JSON.parse(localStorage.getItem("custom")) ? "custom" : "autopay",
+        // currency: JSON.parse(localStorage.getItem("currency")) ? JSON.parse(localStorage.getItem("currency")) : "usd"
     }
 
     getDonation = (donation) => {
@@ -44,6 +45,10 @@ class Sidebar extends React.Component{
             default:
                 return undefined;
         }
+    }
+
+    componentDidMount(){
+        console.log(Object.keys(this.props.conversions));
     }
 
     render(){
@@ -90,10 +95,22 @@ class Sidebar extends React.Component{
                             this.state.showSettings &&
                             <div className="sidebar-details" > 
                                 <h4>Currency display</h4>
-                                <select>
-                                    <option value="usd" key={"curdisp-usd"}> USD </option>
+                                <select
+                                    onChange={(e) => {
+                                        // TODO: FIX THIS STUFF!!
+                                        
+                                        // const option = e.target.value;
+                                        // this.props.setConversion(option.toLocaleLowerCase)
+                                    }}
+                                    // defaultValue={this.props.conversion}
+                                >
                                     {
-                                        // <option value="btc" key={"curdisp-btc"}> BTC </option>
+                                        // TODO: On change, change Dashboard, also save to local storage!!
+                                        Object.keys(this.props.conversions).map((ticker) => {
+                                            return (
+                                                <option value={ticker.toUpperCase()} key={`curdisp-${ticker}`}> {ticker.toUpperCase()} </option>
+                                            );
+                                        })
                                     }
                                 </select>
 

@@ -22,7 +22,7 @@ export default class Dashboard extends React.Component{
         workers: [],
         remaining: 0,
         amount24hr: [],
-        conversion: "btc",
+        conversion: "aud",
         error: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/',
         info: false,
@@ -67,16 +67,16 @@ export default class Dashboard extends React.Component{
     }
 
     conversions ={
-        aud: {
-            rate: 0.8, // Fetch
-            pre: "$",
-            post: "AUD",
-            decimals: 2
-        },
         usd: {
             rate: 1,
             pre: "$",
             post: "USD",
+            decimals: 2
+        },
+        aud: {
+            rate: 0.8, // Fetch
+            pre: "$",
+            post: "AUD",
             decimals: 2
         },
         btc: {
@@ -85,12 +85,6 @@ export default class Dashboard extends React.Component{
             post: "BTC",
             decimals: 6
         },
-        undefined: {
-            rate: 1,
-            pre: "",
-            post: "",
-            decimals: 2
-        }
     }
 
     tempPrices = [];
@@ -236,7 +230,7 @@ export default class Dashboard extends React.Component{
             return price.id == coin;
         });
         if( items.length == 1){
-            return parseFloat(items[0].price_usd) * this.getConversion();
+            return parseFloat(items[0].price_usd) * this.getConversionRate();
         }
     }
 
@@ -359,10 +353,16 @@ export default class Dashboard extends React.Component{
     }
 
     // TODO: IMPLEMENT CURRENCY CONVERSIONS
-    getConversion = () => {
+    getConversionRate = () => {
         const conversion = this.conversions[this.state.conversion];
         const rate = conversion.rate;
         return 1 / rate;
+    }
+
+    setConversion = (conversion) => {
+        this.setState(() => ({
+            conversion
+        }));
     }
 
     pair = () => {
@@ -406,7 +406,6 @@ export default class Dashboard extends React.Component{
 
     readify(number, decimals = 2){
         if(number){
-            console.log(this.state);
             return number.toLocaleString( undefined, { 
                 minimumFractionDigits: decimals,
                 maximumFractionDigits: decimals
@@ -447,6 +446,9 @@ export default class Dashboard extends React.Component{
                         setMinPayOut={this.setMinPayOut}
                         setCustomPayOut={this.setCustomPayOut}
                         minPayout={this.state.minPayout}
+                        conversions={this.conversions}
+                        conversion={this.state.conversion}
+                        setConversion={this.setConversion}
                     />
                 </Menu>
                 <div className="dashboard-main" id="dashboard-main">
