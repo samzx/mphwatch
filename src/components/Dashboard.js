@@ -28,6 +28,7 @@ export default class Dashboard extends React.Component{
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
+        ae_currency: localStorage.getItem("ae_currency") ? localStorage.getItem("ae_currency") :"auto"
     }
 
     backgroundColor = {
@@ -252,20 +253,33 @@ export default class Dashboard extends React.Component{
         }
     }
 
+    setAeCurrency = (ae_currency) => {
+        this.setState(() => ({ae_currency}));
+    }
+
     getPrimaryCoin = () => {
-        // Hijack this method from state if selected
 
         const pairs = this.pair();
-        let max = 0;
-        let maxPair = undefined;
-        pairs.filter((pair) => {
-            let value = pair.total * pair.price
-            if(value > max){
-                max = value;
-                maxPair = pair;
-            }
-        })
-        return maxPair;
+        if(this.state.ae_currency == "auto"){            
+            let max = 0;
+            let maxPair = undefined;
+            pairs.filter((pair) => {
+                let value = pair.total * pair.price
+                if(value > max){
+                    max = value;
+                    maxPair = pair;
+                }
+            })
+            return maxPair;
+        } else {
+            let aePair = undefined;
+            pairs.forEach((pair) => {
+                if(this.state.ae_currency == pair.coin){
+                    aePair = pair;
+                }
+            })
+            return aePair;
+        }
     }
 
     get24hr = (coin) => {
@@ -351,7 +365,6 @@ export default class Dashboard extends React.Component{
         return {days, hours, delta};
     }
 
-    // TODO: IMPLEMENT CURRENCY CONVERSIONS
     getConversionRate = () => {
         const conversion = this.conversions[this.state.conversion];
         const rate = conversion.rate;
@@ -450,6 +463,8 @@ export default class Dashboard extends React.Component{
                         setConversion={this.setConversion}
                         balances={this.state.balances}
                         getName={this.getName}
+                        setAeCurrency={this.setAeCurrency}
+                        ae_currency={this.state.ae_currency}
                     />
                 </Menu>
                 <div className="dashboard-main" id="dashboard-main">

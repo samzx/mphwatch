@@ -2,11 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Landing from './Landing';
 
-const Show = (props) => (
-    <div>
-    </div>
-);
-
 class Sidebar extends React.Component{
 
     state = {
@@ -115,7 +110,10 @@ class Sidebar extends React.Component{
                                 <select
                                     onChange={(e) => {
                                         const option = e.target.value;
+                                        this.props.setAeCurrency(option);
+                                        localStorage.setItem("ae_currency", option);
                                     }}
+                                    defaultValue={this.state.ae_currency}
                                 >
                                     <option value="auto" key={"autoex-auto"}> Largest holding</option>
                                     {
