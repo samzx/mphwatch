@@ -22,12 +22,12 @@ export default class Dashboard extends React.Component{
         workers: [],
         remaining: 0,
         amount24hr: [],
-        conversion: "aud",
+        conversion: localStorage.getItem("conversion") ? localStorage.getItem("conversion") :  "usd",
         error: '',
         proxyurl: 'https://stark-headland-49184.herokuapp.com/',
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
-        customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false
+        customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
     }
 
     backgroundColor = {
