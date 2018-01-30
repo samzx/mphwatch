@@ -46,6 +46,7 @@ class Sidebar extends React.Component{
         }
     }
 
+    // TODO: Seperate into different components
     render(){
         return (
             <div className="sidebar" >
@@ -89,6 +90,8 @@ class Sidebar extends React.Component{
                         {
                             this.state.showSettings &&
                             <div className="sidebar-details" > 
+
+
                                 <h4>Currency display</h4>
                                 <select
                                     onChange={(e) => {
@@ -107,13 +110,24 @@ class Sidebar extends React.Component{
                                     }
                                 </select>
 
+
                                 <h4>Auto Exchange Currency</h4>
-                                <select>
-                                    <option value="auto" key={"autoex-auto"}> Auto detect (max holding)</option>
+                                <select
+                                    onChange={(e) => {
+                                        const option = e.target.value;
+                                    }}
+                                >
+                                    <option value="auto" key={"autoex-auto"}> Largest holding</option>
                                     {
-                                        // <option value="dash" key={"autoex-dash"}> Dash </option>
+                                        this.props.balances.map((balance) => {
+                                            const coin = balance.coin;
+                                            return (
+                                                <option value={coin} key={`autoex-${coin}`}> {this.props.getName(coin)} </option>
+                                            );
+                                        })
                                     }
                                 </select>
+
 
                                 <h4> Automatic Payout Threshold </h4>
                                 <select

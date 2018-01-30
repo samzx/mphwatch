@@ -253,6 +253,8 @@ export default class Dashboard extends React.Component{
     }
 
     getPrimaryCoin = () => {
+        // Hijack this method from state if selected
+
         const pairs = this.pair();
         let max = 0;
         let maxPair = undefined;
@@ -263,7 +265,6 @@ export default class Dashboard extends React.Component{
                 maxPair = pair;
             }
         })
-        // console.log(maxPair);
         return maxPair;
     }
 
@@ -294,8 +295,6 @@ export default class Dashboard extends React.Component{
     }
 
     getRemaining = () => {
-        // If custom, else get min payout
-
         const remaining = this.getMinPayout() - this.sumTotal('total');
         return remaining < 0 ? 0 : remaining;
     }
@@ -373,7 +372,7 @@ export default class Dashboard extends React.Component{
                 ae_unconfirmed,
                 unconfirmed,
                 total: confirmed + ae_unconfirmed + unconfirmed,
-                price: this.getPrice(coin) //* this.getConversion()
+                price: this.getPrice(coin)
             }
         }).sort((a,b) => {
             return b.price * b.total - a.price * a.total;
@@ -449,6 +448,8 @@ export default class Dashboard extends React.Component{
                         conversions={this.conversions}
                         conversion={this.state.conversion}
                         setConversion={this.setConversion}
+                        balances={this.state.balances}
+                        getName={this.getName}
                     />
                 </Menu>
                 <div className="dashboard-main" id="dashboard-main">
