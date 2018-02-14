@@ -87,6 +87,12 @@ export default class Dashboard extends React.Component{
             post: "BTC",
             decimals: 6
         },
+        eur: {
+            rate: 1.24, // Fetch
+            pre: "€",
+            post: "EUR",
+            decimads: 2
+        }
     }
 
     tempPrices = [];
