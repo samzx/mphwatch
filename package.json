@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "dev-server": "webpack-dev-server",
-    "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mph.samxie.net",
+    "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mphstats.solexstudios.com",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {
