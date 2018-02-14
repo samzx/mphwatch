@@ -26,7 +26,7 @@ export default class Landing extends React.Component{
                 }
                 this.props.history.push(`/${this.state.APIKey}`);
             } else {
-                this.setState(() => ({error: 'Please enter a valid API Key'}));
+                this.setState(() => ({error: 'Please enter a valid API Key', fetching: false}));
             }
             // this.setState(() => ({fetching: false}));
         })
