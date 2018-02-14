@@ -1,5 +1,5 @@
 import React from 'react';
-import {Doughnut, Line, HorizontalBar, Bar, Pie} from 'react-chartjs-2';
+import { Doughnut, Line, HorizontalBar, Bar, Pie } from 'react-chartjs-2';
 import { setTimeout } from 'timers';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -67,6 +67,7 @@ export default class Dashboard extends React.Component{
         zclassic: 0.001,
     }
 
+    // TODO: DYNAMICALLY GET RATES
     conversions ={
         usd: {
             rate: 1,
@@ -81,7 +82,7 @@ export default class Dashboard extends React.Component{
             decimals: 2
         },
         btc: {
-            rate: 13000,
+            rate: 11000, // Fetch
             pre: "",
             post: "BTC",
             decimals: 6
@@ -210,7 +211,7 @@ export default class Dashboard extends React.Component{
 
         }).catch((e) => {
             // console.log(e);
-            this.setState(() => ({error: 'Please double check API Key'}));
+            // this.setState(() => ({error: 'Please double check API Key'}));
         })
     }
 
@@ -260,26 +261,29 @@ export default class Dashboard extends React.Component{
     getPrimaryCoin = () => {
 
         const pairs = this.pair();
-        if(this.state.ae_currency == "auto"){            
-            let max = 0;
-            let maxPair = undefined;
-            pairs.filter((pair) => {
-                let value = pair.total * pair.price
-                if(value > max){
-                    max = value;
-                    maxPair = pair;
-                }
-            })
-            return maxPair;
-        } else {
+        if(this.state.ae_currency != "auto"){    
+            
             let aePair = undefined;
             pairs.forEach((pair) => {
                 if(this.state.ae_currency == pair.coin){
                     aePair = pair;
                 }
             })
-            return aePair;
+            if(aePair != undefined){
+                return aePair;
+            }
         }
+
+        let max = 0;
+        let maxPair = undefined;
+        pairs.filter((pair) => {
+            let value = pair.total * pair.price
+            if(value > max){
+                max = value;
+                maxPair = pair;
+            }
+        })
+        return maxPair;
     }
 
     get24hr = (coin) => {
