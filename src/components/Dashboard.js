@@ -69,11 +69,29 @@ export default class Dashboard extends React.Component{
 
     // TODO: DYNAMICALLY GET RATES
     conversions ={
+        btc: {
+            rate: 11000, // Fetch
+            pre: "",
+            post: "BTC",
+            decimals: 6
+        },
+        eth: {
+            rate: 865,
+            pre: "",
+            post: "ETH",
+            decimals: 4
+        },
         usd: {
             rate: 1,
             pre: "$",
             post: "USD",
             decimals: 2
+        },
+        eur: {
+            rate: 1.24, // Fetch
+            pre: "€",
+            post: "EUR",
+            decimads: 2
         },
         aud: {
             rate: 0.8, // Fetch
@@ -81,18 +99,6 @@ export default class Dashboard extends React.Component{
             post: "AUD",
             decimals: 2
         },
-        btc: {
-            rate: 11000, // Fetch
-            pre: "",
-            post: "BTC",
-            decimals: 6
-        },
-        eur: {
-            rate: 1.24, // Fetch
-            pre: "€",
-            post: "EUR",
-            decimads: 2
-        }
     }
 
     tempPrices = [];
