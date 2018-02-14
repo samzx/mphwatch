@@ -1,10 +1,10 @@
-# mphstats
+# MPHStats
 Stats for miners mining on Mining Pool Hub. Clean and simple interface for monitoring mining activity.
 
 Will always be free, open source and not store any information.
 
 ## Demo
-Live demo [here](http://mph.samxie.net/). Login using api key.
+Live demo [here](http://mphstats.solexstudios.com/). Login using api key.
 
 Directly access your stats by adding api key after domain.
 Example:
