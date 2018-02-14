@@ -39,7 +39,6 @@ export default class Landing extends React.Component{
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.APIKey);
         if(!this.state.fetching){
             this.verifyKey(this.state.APIKey);
         }
