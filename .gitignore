@@ -3,3 +3,4 @@ yarn.lock
 public/*
 !public/index.html
 src/playground/*
+src/playground/test.js
