@@ -223,7 +223,7 @@ export default class Dashboard extends React.Component{
 
         }).catch((e) => {
             // console.log(e);
-            // this.setState(() => ({error: 'Please double check API Key'}));
+            this.props.history.push('/');
         })
     }
 
