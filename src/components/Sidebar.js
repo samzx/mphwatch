@@ -13,6 +13,20 @@ class Sidebar extends React.Component{
         payout: JSON.parse(localStorage.getItem("custom")) ? "custom" : "autopay",
     }
 
+    handleCustomInput = (e) => {
+        let amount = e.target.value;
+        amount = amount > 0 ? amount : 0;
+        this.props.setMinPayOut(amount);
+        localStorage.setItem("payout", amount);
+    }
+
+    removeLeadingZero = (text) => {
+        if(!text.includes(".")){
+            return text.replace(/^0+/, '');
+        }
+        return text;
+    }
+
     getDonation = (donation) => {
         switch(donation){
             case 'btc':
@@ -156,13 +170,8 @@ class Sidebar extends React.Component{
                                     <input 
                                         type="number"
                                         className="custom-payout-input"
-                                        value={this.props.minPayout}
-                                        onChange={(e) => {
-                                            let amount = e.target.value;
-                                            amount = amount > 0 ? amount : 0;
-                                            this.props.setMinPayOut(amount);
-                                            localStorage.setItem("payout", amount);
-                                        }}
+                                        value={this.props.minPayout ? this.removeLeadingZero(this.props.minPayout) : 0}
+                                        onChange={this.handleCustomInput}
                                     />
                                 }
                             </div>
