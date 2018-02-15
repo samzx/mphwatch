@@ -502,6 +502,12 @@ export default class Dashboard extends React.Component{
         return sum;
     }
 
+    readifyInt(number, decimals = 2){
+        if(number){
+            return number.toFixed(decimals);
+        }
+    }
+
     readify(number, decimals = 2){
         if(number){
             return number.toLocaleString( undefined, { 
@@ -612,7 +618,7 @@ export default class Dashboard extends React.Component{
                         <div className="row row--graph" >                        
                             <HoldingsChart 
                                 pair={this.pair}
-                                readify={this.readify}
+                                readify={this.readifyInt}
                                 getName={this.getName}
                                 backgroundColor={this.backgroundColor}
                                 info={this.state.info}
@@ -625,7 +631,7 @@ export default class Dashboard extends React.Component{
                                 getColor={this.getColor}
                                 getName={this.getName}
                                 info={this.state.info}
-                                readify={this.readify}
+                                readify={this.readifyInt}
                                 conversion={this.state.conversions[this.state.conversion]}
                             />
                         </div>
