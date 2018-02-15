@@ -178,12 +178,16 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            this.tempPrices.push({
-                id: data[0].id,
-                name: data[0].name,
-                price_usd: data[0].price_usd,
-                price_btc: data[0].price_btc
-            })
+            try {                
+                this.tempPrices.push({
+                    id: data[0].id,
+                    name: data[0].name,
+                    price_usd: data[0].price_usd,
+                    price_btc: data[0].price_btc
+                })
+            } catch (e) {
+                console.error(`Could not fetch data for ${coin}`);
+            }
         })
         return { promise };
     }
@@ -399,6 +403,7 @@ export default class Dashboard extends React.Component{
     }
 
     getRemaining = () => {
+        console.log(this.sumTotal('total'));
         const remaining = this.getMinPayout() - this.sumTotal('total');
         return remaining < 0 ? 0 : remaining;
     }
@@ -486,7 +491,7 @@ export default class Dashboard extends React.Component{
     sumTotal = (mode) => {
         let sum = 0;
         this.pair().forEach((entry) => {
-            let part;
+            let part = 0;
             switch(mode){
                 case 'total':
                     part = entry.total;
@@ -501,7 +506,9 @@ export default class Dashboard extends React.Component{
                     part = entry.unconfirmed;
                     break;
             }
-            sum += entry.price * part;
+            if(entry.price) {
+                sum += entry.price * part;
+            }
         })
         return sum;
     }
