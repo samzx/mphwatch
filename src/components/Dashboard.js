@@ -328,6 +328,8 @@ export default class Dashboard extends React.Component{
         });
         if( items.length == 1){
             return items[0].name;
+        } else {
+            return "Unknown";
         }
     }
     
@@ -403,7 +405,6 @@ export default class Dashboard extends React.Component{
     }
 
     getRemaining = () => {
-        console.log(this.sumTotal('total'));
         const remaining = this.getMinPayout() - this.sumTotal('total');
         return remaining < 0 ? 0 : remaining;
     }
@@ -547,7 +548,7 @@ export default class Dashboard extends React.Component{
         this.beginFetch();
         setInterval(() => {
             this.beginFetch();
-        } , 600000);
+        } , 1800000);
     }
 
     render(){
