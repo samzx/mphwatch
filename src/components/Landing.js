@@ -55,7 +55,7 @@ export default class Landing extends React.Component{
         return (
             <div className="landing" >
                 <div className="input-container">
-                    <h1 className="landing-title" >MPH Stats</h1>
+                    <h1 className="landing-title" >MPH Watch</h1>
                     {
                         this.state.fetching ? 
                         <Loading />

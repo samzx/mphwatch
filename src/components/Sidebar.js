@@ -45,7 +45,7 @@ class Sidebar extends React.Component{
     render(){
         return (
             <div className="sidebar" >
-                <h1> MPH Stats </h1>
+                <h1> MPH Watch </h1>
                 <div className="sidebar-contents">
                     <div className="sidebar-item" >
                         <h3> About </h3>
@@ -199,7 +199,7 @@ class Sidebar extends React.Component{
                             this.state.showMore && 
                             <div className="sidebar-details" >
                                 <p> This project is open source. I'd love to hear your feedback. Report any issues or feature requests on my 
-                                    <a href="https://github.com/solexstudios/mphstats/issues" target="_blank"> Github</a>.
+                                    <a href="https://github.com/solexstudios/mphwatch/issues" target="_blank"> Github</a>.
                                     Alternatively send me a pm on <a href="https://www.reddit.com/message/compose/?to=Sxalpha" target="_blank"> Reddit</a>.
                                 </p>
                             </div>
