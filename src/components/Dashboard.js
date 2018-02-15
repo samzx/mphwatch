@@ -388,7 +388,11 @@ export default class Dashboard extends React.Component{
             if(this.state.customPayout){
                 target =  this.state.minPayout * maxPair.price;
             } else {
-                target = this.minPayout[maxPair.coin] * maxPair.price;
+                try {
+                    target = this.minPayout[maxPair.coin] * maxPair.price;
+                } catch (e) {
+                    return 0;
+                }
             }
             return target;
         }
