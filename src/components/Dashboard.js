@@ -426,21 +426,26 @@ export default class Dashboard extends React.Component{
     }
 
     getProfit = (coin, hashrate) => {
-        let Key;
-        Object.keys(this.state.mining).filter((key) => {
-            if(key.toLowerCase() == coin.replace('-', '')){
-                Key = key;
-            }
-        })
-
-        const {algorithm, block_time, block_reward, nethash} = this.state.mining[Key];
-        const coinPerSecond = block_reward / block_time;
-        const secondsPerDay = 86400;
-        const coinsPerDay = coinPerSecond * secondsPerDay;
-        const miningShare = hashrate * 1000 / nethash;
-        const poolFee = 0.005;
-        const dailyProfit = coinsPerDay * this.getPrice(coin) * miningShare * (1 - poolFee);
-        return { dailyProfit, algorithm };
+        try {
+            let Key;
+            Object.keys(this.state.mining).filter((key) => {
+                if(key.toLowerCase() == coin.replace('-', '')){
+                    Key = key;
+                }
+            })
+    
+            const {algorithm, block_time, block_reward, nethash} = this.state.mining[Key];
+            const coinPerSecond = block_reward / block_time;
+            const secondsPerDay = 86400;
+            const coinsPerDay = coinPerSecond * secondsPerDay;
+            const miningShare = hashrate * 1000 / nethash;
+            const poolFee = 0.005;
+            const dailyProfit = coinsPerDay * this.getPrice(coin) * miningShare * (1 - poolFee);
+            return { dailyProfit, algorithm };
+        } catch (e) {
+            console.error(`Unable to get profitability of ${coin}.`);
+            return { dailyProfit: 0 , algorithm: "Unknown"};
+        }
     }
 
     getTotalProfit = () => {
