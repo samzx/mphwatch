@@ -2,7 +2,6 @@
   margin-bottom: 4rem;
 }
 
-
 .sidebar-item{
   display: flex;
   margin: 0rem;
@@ -40,6 +39,11 @@
   height: $m-size;
   padding: $s-size/2  0 $s-size/2 $s-size/2;
   width: 20rem;
+}
+
+select{
+  width: 20rem + $s-size/2;
+  height: $l-size;
 }
 
 
