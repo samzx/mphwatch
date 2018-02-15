@@ -6,7 +6,6 @@ class HoldingsChart extends Card{
 
     getBarData = () => {
         const pairs = this.props.pair();
-        // console.log(pairs);
         let data = {
             datasets:[
                 {

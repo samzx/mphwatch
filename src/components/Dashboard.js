@@ -28,7 +28,45 @@ export default class Dashboard extends React.Component{
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
-        ae_currency: localStorage.getItem("ae_currency") ? localStorage.getItem("ae_currency") :"auto"
+        ae_currency: localStorage.getItem("ae_currency") ? localStorage.getItem("ae_currency") :"auto",
+        conversions: {
+            btc: {
+                rate: 11000,
+                pre: "",
+                post: "BTC",
+                decimals: 6
+            },
+            eth: {
+                rate: 865,
+                pre: "",
+                post: "ETH",
+                decimals: 4
+            },
+            usd: {
+                rate: 1,
+                pre: "$",
+                post: "USD",
+                decimals: 2
+            },
+            eur: {
+                rate: 1.24,
+                pre: "€",
+                post: "EUR",
+                decimals: 2
+            },
+            gbp: {
+                rate: 1.41,
+                pre: "£",
+                post: "GBP",
+                decimals: 2
+            },
+            aud: {
+                rate: 0.8,
+                pre: "$",
+                post: "AUD",
+                decimals: 2
+            },
+        }
     }
 
     backgroundColor = {
@@ -67,40 +105,6 @@ export default class Dashboard extends React.Component{
         zclassic: 0.001,
     }
 
-    // TODO: DYNAMICALLY GET RATES
-    conversions ={
-        btc: {
-            rate: 11000, // Fetch
-            pre: "",
-            post: "BTC",
-            decimals: 6
-        },
-        eth: {
-            rate: 865,
-            pre: "",
-            post: "ETH",
-            decimals: 4
-        },
-        usd: {
-            rate: 1,
-            pre: "$",
-            post: "USD",
-            decimals: 2
-        },
-        eur: {
-            rate: 1.24, // Fetch
-            pre: "€",
-            post: "EUR",
-            decimads: 2
-        },
-        aud: {
-            rate: 0.8, // Fetch
-            pre: "$",
-            post: "AUD",
-            decimals: 2
-        },
-    }
-
     tempPrices = [];
     tempWorkers = [];
     temp24hr = [];
@@ -120,7 +124,6 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            // console.log(coin, data.getdashboarddata.data.recent_credits_24hours.amount);
             this.temp24hr.push({coin, amount: data.getdashboarddata.data.recent_credits_24hours.amount});
         })
         return { promise }
@@ -142,7 +145,6 @@ export default class Dashboard extends React.Component{
                     activeWorkers.push(poolWorkers[i]);
                 }
             }
-            // console.log(coin, activeWorkers);
             activeWorkers.map((worker) => this.tempWorkers.push({
                 ...worker,
                 coin
@@ -160,7 +162,6 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            // console.log(data);
             this.setState(() => ({
                 mining: data.coins
             }));
@@ -187,6 +188,76 @@ export default class Dashboard extends React.Component{
         return { promise };
     }
 
+    fetchConversions = () => {
+
+        const btcurl = `https://api.coinmarketcap.com/v1/ticker/bitcoin/`;
+        const ethurl = `https://api.coinmarketcap.com/v1/ticker/ethereum/`;
+        const url = `https://api.fixer.io/latest?base=USD`;
+
+        // Fiat
+        fetch(this.state.proxyurl + url, {
+            method: "GET",
+        })
+        .then((resp) => {
+            return resp.json();
+        })
+        .then((data) => {
+            Object.keys(this.state.conversions).map((supportedCurrency) => {
+                Object.keys(data.rates).map((fetchedCurrency) => {
+                    if(fetchedCurrency.toLocaleLowerCase() == supportedCurrency.toLocaleLowerCase()){
+                        this.setState((prevState) => ({ 
+                            conversions: {
+                                ...prevState.conversions,
+                                [supportedCurrency]: {
+                                    ...prevState.conversions[supportedCurrency],
+                                    rate: 1 / data.rates[fetchedCurrency]
+                                }
+                            }
+                        }))
+                    }
+                })
+            })
+        })
+        // BTC
+
+        fetch(this.state.proxyurl + btcurl, {
+            method: "GET",
+        })
+        .then((resp) => {
+            return resp.json();
+        })
+        .then((data) => {
+            this.setState((prevState) => ({ 
+                conversions: {
+                    ...prevState.conversions,
+                    btc: {
+                        ...prevState.conversions.btc,
+                        rate: data[0].price_usd,
+                    }
+                }
+            }))
+        });
+
+        // ETH
+        fetch(this.state.proxyurl + ethurl, {
+            method: "GET",
+        })
+        .then((resp) => {
+            return resp.json();
+        })
+        .then((data) => {
+            this.setState((prevState) => ({ 
+                conversions: {
+                    ...prevState.conversions,
+                    eth: {
+                        ...prevState.conversions.eth,
+                        rate: data[0].price_usd,
+                    }
+                }
+            }))
+        });
+    }
+
     fetchData = () => {
         const url = `https://miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${this.state.apiKey}`;
         fetch(this.state.proxyurl + url, {
@@ -196,11 +267,12 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-            // console.log(data);
             const balances = data.getuserallbalances.data;
             this.setState(() => ({
                 balances
             }))
+
+            this.fetchConversions();
 
             Promise.all(balances.map((balance) => this.fetchPrices(balance.coin).promise))
             .then(() => {
@@ -210,7 +282,6 @@ export default class Dashboard extends React.Component{
 
             Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
             .then(() => {
-                // console.log("promise fulfilled");
                 this.setState(() => ({amount24hr: this.temp24hr}));
                 this.temp24hr = [];
             })
@@ -222,7 +293,6 @@ export default class Dashboard extends React.Component{
             })
 
         }).catch((e) => {
-            // console.log(e);
             this.props.history.push('/');
         })
     }
@@ -382,7 +452,7 @@ export default class Dashboard extends React.Component{
     }
 
     getConversionRate = () => {
-        const conversion = this.conversions[this.state.conversion];
+        const conversion = this.state.conversions[this.state.conversion];
         const rate = conversion.rate;
         return 1 / rate;
     }
@@ -474,7 +544,7 @@ export default class Dashboard extends React.Component{
                         setMinPayOut={this.setMinPayOut}
                         setCustomPayOut={this.setCustomPayOut}
                         minPayout={this.state.minPayout}
-                        conversions={this.conversions}
+                        conversions={this.state.conversions}
                         conversion={this.state.conversion}
                         setConversion={this.setConversion}
                         balances={this.state.balances}
@@ -491,7 +561,7 @@ export default class Dashboard extends React.Component{
                         sumTotal={this.sumTotal}
                         info={this.state.info}
                         handleInfoToggle={this.handleInfoToggle}
-                        conversion={this.conversions[this.state.conversion]}
+                        conversion={this.state.conversions[this.state.conversion]}
                     />
                     <div className="container dashboard-container">
                         {
@@ -510,7 +580,7 @@ export default class Dashboard extends React.Component{
                                     readify={this.readify}
                                     getTotalProfit={this.getTotalProfit}
                                     info={this.state.info}
-                                    conversion={this.conversions[this.state.conversion]}
+                                    conversion={this.state.conversions[this.state.conversion]}
                                 />
                                 <PayoutEstimate
                                     display={this.state.workers.length > 0}
@@ -522,7 +592,7 @@ export default class Dashboard extends React.Component{
                                     getPrimaryCoin={this.getPrimaryCoin}
                                     getMinPayout={this.getMinPayout}
                                     info={this.state.info}
-                                    conversion={this.conversions[this.state.conversion]}
+                                    conversion={this.state.conversions[this.state.conversion]}
                                 />
         
                             </div>
@@ -546,7 +616,7 @@ export default class Dashboard extends React.Component{
                                 getName={this.getName}
                                 backgroundColor={this.backgroundColor}
                                 info={this.state.info}
-                                conversion={this.conversions[this.state.conversion]}
+                                conversion={this.state.conversions[this.state.conversion]}
                             />
 
                             <Distribution
@@ -556,7 +626,7 @@ export default class Dashboard extends React.Component{
                                 getName={this.getName}
                                 info={this.state.info}
                                 readify={this.readify}
-                                conversion={this.conversions[this.state.conversion]}
+                                conversion={this.state.conversions[this.state.conversion]}
                             />
                         </div>
                     </div>
