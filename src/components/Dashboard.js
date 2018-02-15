@@ -606,7 +606,7 @@ export default class Dashboard extends React.Component{
 
                         <div className="row row--progress" >                                            
                             <Progress 
-                                readify={this.readify}
+                                readify={this.readifyInt}
                                 sumTotal={this.sumTotal}
                                 getMinPayout={this.getMinPayout}
                                 getRemaining={this.getRemaining}
