@@ -1,10 +1,10 @@
-# MPHStats
+# MPH Watch
 Stats for miners mining on Mining Pool Hub. Clean and simple interface for monitoring mining activity.
 
 Will always be free, open source and not store any information.
 
 ## Demo
-Live demo [here](http://mphstats.solexstudios.com/). Login using api key.
+Live demo [here](http://mphwatch.solexstudios.com/). Login using api key.
 
 Directly access your stats by adding api key after domain.
 Example:
@@ -24,12 +24,12 @@ API Key can be found under https://miningpoolhub.com/?page=account&action=edit
 
 Clone the project
 ```
-git clone https://github.com/samzx/mphstats.git
+git clone https://github.com/samzx/mphwatch.git
 ```
 
 Move into directory
 ```
-cd mphstats
+cd mphwatch
 ```
 
 Install dependancies
