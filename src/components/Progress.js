@@ -61,9 +61,6 @@ class Progress extends Chart{
                 }]
             },
             events: [],
-            animation: {
-                duration: this.props.duration
-            }
         }
     );
 

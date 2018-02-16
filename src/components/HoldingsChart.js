@@ -53,9 +53,6 @@ class HoldingsChart extends Chart{
                         beginAtZero: true
                     },
                 }]
-            },
-            animation: {
-                duration: this.props.duration
             }
         }
     );

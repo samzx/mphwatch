@@ -30,7 +30,6 @@ export default class Dashboard extends React.Component{
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
         ae_currency: localStorage.getItem("ae_currency") ? localStorage.getItem("ae_currency") :"auto",
         chartShouldRedraw: false,
-        animationDuration: 1000,
         conversions: {
             btc: {
                 rate: 11000,
@@ -309,15 +308,12 @@ export default class Dashboard extends React.Component{
             .then(() => {
                 this.setState(() => ({amount24hr: this.temp24hr}));
                 this.temp24hr = [];
-                setTimeout(() => {
-                    this.setState(() => ({ animationDuration: 0 }));
-                }, 1000);
             })
 
             Promise.all(balances.map((balance) => this.fetchHash(balance.coin).promise))
             .then(() => {
                 this.setState(() => ({workers: this.tempWorkers}));
-                this.tempWorkers = [];
+                this.tempWorkers = [];           
             })
 
         }).catch((e) => {
@@ -654,7 +650,6 @@ export default class Dashboard extends React.Component{
                                 getRemaining={this.getRemaining}
                                 backgroundColor={this.backgroundColor}
                                 info={this.state.info}
-                                duration={this.state.animationDuration}
                             />
                         </div>
 
@@ -666,7 +661,6 @@ export default class Dashboard extends React.Component{
                                 backgroundColor={this.backgroundColor}
                                 info={this.state.info}
                                 conversion={this.state.conversions[this.state.conversion]}
-                                duration={this.state.animationDuration}
                             />
 
                             <Distribution
@@ -677,7 +671,6 @@ export default class Dashboard extends React.Component{
                                 info={this.state.info}
                                 readify={this.readifyInt}
                                 conversion={this.state.conversions[this.state.conversion]}
-                                duration={this.state.animationDuration}
                             />
                         </div>
                     </div>
