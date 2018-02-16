@@ -169,7 +169,20 @@ export default class Dashboard extends React.Component{
     }
 
     fetchPrices = (coin) => {
-        const url = `https://api.coinmarketcap.com/v1/ticker/${coin}`;
+        // Strip coin algorithm from name
+        let coinTicker = coin;
+        const coinNames = coin.split("-");
+        if(coinNames.length > 1) {
+            const validSuffix = ["cash", "gold", "classic"];
+            const intersections = coinNames.filter((name) => {
+                return validSuffix.indexOf(name) != -1;
+            });
+            if(intersections.length == 0) {
+                coinTicker = coinNames[0];
+            }
+        }
+
+        const url = `https://api.coinmarketcap.com/v1/ticker/${coinTicker}`;
         const promise = 
         fetch(this.state.proxyurl + url, {
             method: "GET",
@@ -180,7 +193,7 @@ export default class Dashboard extends React.Component{
         .then((data) => {
             try {                
                 this.tempPrices.push({
-                    id: data[0].id,
+                    id: coin,
                     name: data[0].name,
                     price_usd: data[0].price_usd,
                     price_btc: data[0].price_btc

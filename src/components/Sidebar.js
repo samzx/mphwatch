@@ -46,8 +46,8 @@ class Sidebar extends React.Component{
             case 'eth':
                 return (
                     <div>
-                        <p className="wrap" >0x1fab1c7dcae109e9367d4e07d85494e819fb2c0d</p>
-                        <img src='https://chart.googleapis.com/chart?cht=qr&chl=0x1fab1c7dcae109e9367d4e07d85494e819fb2c0d&chs=180x180&choe=UTF-8&chld=L|2' alt='' />
+                        <p className="wrap" >0xcd503075a4e4d8791b2cd32fb362c50d960c72e9</p>
+                        <img src='https://chart.googleapis.com/chart?cht=qr&chl=0xcd503075a4e4d8791b2cd32fb362c50d960c72e9&chs=180x180&choe=UTF-8&chld=L|2' alt='' />
                     </div>
                 );
             default:
