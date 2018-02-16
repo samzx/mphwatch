@@ -209,7 +209,8 @@ class Sidebar extends React.Component{
                             <div className="sidebar-details" >
                                 <p> This project is open source. I'd love to hear your feedback. Report any issues or feature requests on my 
                                     <a href="https://github.com/samzx/mphwatch/issues" target="_blank"> Github</a>.
-                                    Alternatively send me a pm on <a href="https://www.reddit.com/message/compose/?to=Sxalpha" target="_blank"> Reddit</a>.
+                                    Alternatively send me a pm on <a href="https://www.reddit.com/message/compose/?to=Sxalpha" target="_blank"> Reddit </a> 
+                                    or fill out the form <a href="http://www.solexstudios.com/contact/" target="_blank">here</a>.
                                 </p>
                             </div>
                         }
