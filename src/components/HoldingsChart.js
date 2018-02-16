@@ -53,7 +53,10 @@ class HoldingsChart extends Chart{
                         beginAtZero: true
                     },
                 }]
-            }
+            },
+            animation: {
+                duration: window.innerWidth > 800 ? 1000 : 0,
+            },
         }
     );
 

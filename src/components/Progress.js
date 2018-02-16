@@ -61,6 +61,9 @@ class Progress extends Chart{
                 }]
             },
             events: [],
+            animation: {
+                duration: window.innerWidth > 800 ? 1000 : 0,
+            },
         }
     );
 

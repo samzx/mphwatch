@@ -26,7 +26,10 @@ class Distribution extends Chart{
                     title: (tooltipItem, chart) => {return 'Amount credited'},
                     afterLabel: (tooltipItem, chart) => {"yes"}
                 },
-            }
+            },
+            animation: {
+                duration: window.innerWidth > 800 ? 1000 : 0,
+            },
         }
     );
 
