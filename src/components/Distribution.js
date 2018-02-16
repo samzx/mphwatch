@@ -23,7 +23,7 @@ class Distribution extends Card{
         {
             tooltips: {
                 callbacks: {
-                    title: (tooltipItem, chart) => {return 'Dollar Value'},
+                    title: (tooltipItem, chart) => {return 'Amount credited'},
                     afterLabel: (tooltipItem, chart) => {"yes"}
                 },
             }
