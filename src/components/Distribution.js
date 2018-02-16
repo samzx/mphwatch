@@ -1,8 +1,8 @@
 import React from 'react';
 import { Pie, Doughnut } from 'react-chartjs-2';
-import Card from './Card';
+import Chart from './Chart';
 
-class Distribution extends Card{
+class Distribution extends Chart{
 
     getDistributionData = () => {
         const pairs = this.props.pair();
@@ -42,8 +42,9 @@ class Distribution extends Card{
                 ) }
                 <h2> 24 Hour Credit Distribution</h2>
                 <Pie
-                    data={this.getDistributionData()}
+                    data = {this.getDistributionData()}
                     options = {this.getDistributionOptions()}
+                    redraw = {this.state.redraw}
                 />
 
             </div>

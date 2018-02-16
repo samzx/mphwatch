@@ -1,8 +1,8 @@
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
-import Card from './Card';
+import Chart from './Chart';
 
-class Progress extends Card{
+class Progress extends Chart{
 
     getPercentage = () => {
         const percent = (this.props.sumTotal('total') / this.props.getMinPayout() * 100);
@@ -84,6 +84,7 @@ class Progress extends Card{
                     height={document.body.clientWidth > 480 ? 15 : 40}
                     data={this.getProgressBarData()}
                     options={this.getProgressBarOptions()}
+                    redraw={this.state.redraw}
                 />
               </div>
         );

@@ -29,6 +29,7 @@ export default class Dashboard extends React.Component{
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
         ae_currency: localStorage.getItem("ae_currency") ? localStorage.getItem("ae_currency") :"auto",
+        chartShouldRedraw: false,
         conversions: {
             btc: {
                 rate: 11000,
@@ -316,6 +317,7 @@ export default class Dashboard extends React.Component{
             })
 
         }).catch((e) => {
+            console.error('Failed to fetch balance. API likely incorrect.');
             this.props.history.push('/');
         })
     }

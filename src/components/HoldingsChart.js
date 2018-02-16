@@ -1,27 +1,24 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import Card from './Card';
+import Chart from './Chart';
 
-class HoldingsChart extends Card{
+class HoldingsChart extends Chart{
 
     getBarData = () => {
         const pairs = this.props.pair();
         let data = {
             datasets:[
                 {
-                    // Confirmed
                     label: 'Confirmed',
                     data: pairs.map((pair) => this.props.readify(pair.confirmed * pair.price, this.props.conversion.decimals)) ,
                     backgroundColor: this.props.backgroundColor.confirmed
                 },
                 {
-                    // On exchange
                     label: 'On exchange',
                     data: pairs.map((pair) => this.props.readify(pair.ae_unconfirmed * pair.price, this.props.conversion.decimals)),
                     backgroundColor: this.props.backgroundColor.exchange
                 },
                 {
-                    // Unconfirmed
                     label: 'Unconfirmed',
                     data: pairs.map((pair) => this.props.readify(pair.unconfirmed * pair.price, this.props.conversion.decimals)),
                     backgroundColor: this.props.backgroundColor.unconfirmed
@@ -39,8 +36,6 @@ class HoldingsChart extends Card{
                 text: 'Dollar Value (USD)',
                 position: 'top'
             },
-            // responsive: false,
-            // maintainAspectRatio: false,
             scales: {
                 xAxes: [{
                     scaleLabel: {
@@ -76,6 +71,7 @@ class HoldingsChart extends Card{
                 <Bar
                     data={this.getBarData()}
                     options = {this.getBarOptions()}
+                    redraw={this.state.redraw}
                 />
 
             </div>
