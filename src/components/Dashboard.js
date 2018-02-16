@@ -572,7 +572,7 @@ export default class Dashboard extends React.Component{
         this.beginFetch();
         setInterval(() => {
             this.beginFetch();
-        } , 1800000);
+        } , 300000);
     }
 
     render(){
