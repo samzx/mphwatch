@@ -200,6 +200,12 @@ export default class Dashboard extends React.Component{
                 })
             } catch (e) {
                 console.error(`Could not fetch data for ${coin}`);
+                this.tempPrices.push({
+                    id: coin,
+                    name: coin + " (error)",
+                    price_usd: 0,
+                    price_btc: 0,
+                })
             }
         })
         return { promise };
