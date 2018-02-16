@@ -22,9 +22,9 @@
 }
 
 .row>*{
-    transition: box-shadow $default-animation-time ease-in-out,
-                border-top $default-animation-time ease-in-out;
+    transition: all $default-animation-time ease-in-out;
 }
+
 .stats{
     background: #fff;
     flex: 1;
@@ -42,8 +42,6 @@
 
 .row>*:hover{
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.075);
-    transition: box-shadow $default-animation-time ease-in-out, 
-                border-top $default-animation-time ease-in-out;
 }
 
 @media (min-width: 800px){
