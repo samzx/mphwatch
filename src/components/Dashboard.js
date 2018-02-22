@@ -457,6 +457,8 @@ export default class Dashboard extends React.Component{
             Object.keys(this.state.mining).filter((key) => {
                 if(key.toLowerCase() == coin.replace('-', '')){
                     Key = key;
+                } else if (key.toLowerCase()+'coin' == coin.replace('-', '')){
+                    Key = key;
                 }
             })
     
