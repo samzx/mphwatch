@@ -359,7 +359,12 @@ export default class Dashboard extends React.Component{
         if(color){
             return color;
         } else {
-            return "#"+((1<<24)*Math.random()|0).toString(16);
+            const newColor = "#"+((1<<24)*Math.random()|0).toString(16);
+            this.backgroundColor = {
+                ...this.backgroundColor,
+                [id] : newColor
+            }
+            return newColor;
         }
     }
 
