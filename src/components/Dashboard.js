@@ -242,27 +242,22 @@ export default class Dashboard extends React.Component{
 
             this.fetchConversions();
 
-            Promise.all([this.fetchPrices().promise])
+            Promise.all([
+                this.fetchPrices().promise, 
+                balances.map((balance) => this.fetch24hr(balance.coin).promise), 
+                balances.map((balance) => this.fetchHash(balance.coin).promise),
+            ])
             .then(() => {
                 this.setState((prevState) => ({
                     prices: this.tempPrices,
+                    amount24hr: this.temp24hr,
+                    workers: this.tempWorkers,
                 }))
                 this.tempPrices = [];
-                console.log("Fetching prices attempt complete.")
-            })
-
-            Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
-            .then(() => {
-                this.setState(() => ({amount24hr: this.temp24hr}));
                 this.temp24hr = [];
-            })
-
-            Promise.all(balances.map((balance) => this.fetchHash(balance.coin).promise))
-            .then(() => {
-                this.setState(() => ({workers: this.tempWorkers}));
                 this.tempWorkers = [];           
+                // console.log("Fetching prices attempt complete.")
             })
-
         }).catch((e) => {
             console.error('Failed to fetch balance. API likely incorrect.');
             this.props.history.push('/');
