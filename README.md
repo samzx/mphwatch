@@ -1,4 +1,9 @@
 # MPH Watch
+<p align="center">
+  <img src="http://www.solexstudios.com/wp-content/uploads/2018/02/img.png" alt="webpreview"/>
+</p>
+
+
 Stats for miners mining on Mining Pool Hub. Clean and simple interface for monitoring mining activity.
 
 Will always be free, open source and not store any information.
