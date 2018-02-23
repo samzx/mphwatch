@@ -32,13 +32,13 @@ export default class Dashboard extends React.Component{
         chartShouldRedraw: false,
         conversions: {
             btc: {
-                rate: 11000,
+                rate: 0,
                 pre: "",
                 post: "BTC",
                 decimals: 6
             },
             eth: {
-                rate: 865,
+                rate: 0,
                 pre: "",
                 post: "ETH",
                 decimals: 4
@@ -192,7 +192,7 @@ export default class Dashboard extends React.Component{
     fetchConversions = () => {
         const url = `https://api.fixer.io/latest?base=USD`;
 
-        // Fiat
+        // Fiat conversoins
         fetch(this.state.proxyurl + url, {
             method: "GET",
         })
@@ -210,19 +210,30 @@ export default class Dashboard extends React.Component{
                                     ...prevState.conversions[supportedCurrency],
                                     rate: 1 / data.rates[fetchedCurrency]
                                 },
-                                btc: {
-                                    ...prevState.conversions.btc,
-                                    rate: this.getPrice("bitcoin"),
-                                },
-                                eth: {
-                                    ...prevState.conversions.eth,
-                                    rate: this.getPrice("ethereum"),
-                                }
                             },
                         }))
                     }
                 })
-            })
+            });
+
+            // Crypto conversions
+            this.setState((prevState) => ({
+                conversions: {
+                    ...prevState.conversions,
+                    btc: {
+                        ...prevState.conversions.btc,
+                        rate: this.state.prices.filter((item) => {
+                            return item.id == "bitcoin";
+                        })[0].price_usd,
+                    },
+                    eth: {
+                        ...prevState.conversions.eth,
+                        rate: this.state.prices.filter((item) => {
+                            return item.id == "ethereum";
+                        })[0].price_usd,
+                    }
+                }
+            }))
         })
     }
 
@@ -240,15 +251,15 @@ export default class Dashboard extends React.Component{
                 balances
             }))
 
-            this.fetchConversions();
-
+            
             Promise.all([this.fetchPrices().promise])
             .then(() => {
                 this.setState((prevState) => ({
                     prices: this.tempPrices,
                 }))
+                this.fetchConversions();
                 this.tempPrices = [];
-                console.log("Fetching prices attempt complete.")
+                // console.log("Fetching prices attempt complete.")
             })
 
             Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
