@@ -5,9 +5,12 @@
   "author": "Sam Xie",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build-config": "webpack",
+    "build": "webpack --config webpack.prod.js",
     "dev-server": "webpack-dev-server",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mphwatch.solexstudios.com",
+    "upload-test": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mph.samxie.net",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {
@@ -33,7 +36,12 @@
     "roboto-fontface": "^0.8.0",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
+    "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "3.1.0",
-    "webpack-dev-server": "2.5.1"
+    "webpack-dev-server": "^2.11.1"
+  },
+  "devDependencies": {
+    "uglify-js-brunch": "^2.10.0",
+    "webpack-merge": "^4.1.2"
   }
 }
