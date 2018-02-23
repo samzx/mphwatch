@@ -41,7 +41,7 @@ export default class Dashboard extends React.Component{
                 rate: 0,
                 pre: "",
                 post: "ETH",
-                decimals: 4
+                decimals: 5
             },
             usd: {
                 rate: 1,
