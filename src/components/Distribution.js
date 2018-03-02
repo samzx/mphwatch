@@ -5,7 +5,10 @@ import Chart from './Chart';
 class Distribution extends Chart{
 
     getDistributionData = () => {
-        const pairs = this.props.pair();
+        const unfilteredPairs = this.props.pair();
+        const pairs = unfilteredPairs.filter((item) => {
+            return this.props.get24hr(item.coin) > 0;
+        })
         let data = { 
             datasets: [
                 { 
