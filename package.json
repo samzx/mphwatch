@@ -10,7 +10,7 @@
     "dev-server": "webpack-dev-server",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mphwatch.solexstudios.com",
-    "upload-test": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mph.samxie.net",
+    "upload-test": "scp -r ./public/* sam@45.76.244.215:../../var/www/mphwatch",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {

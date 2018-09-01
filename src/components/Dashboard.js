@@ -24,7 +24,7 @@ export default class Dashboard extends React.Component{
         amount24hr: [],
         conversion: localStorage.getItem("conversion") ? localStorage.getItem("conversion") :  "usd",
         error: '',
-        proxyurl: 'https://stark-headland-49184.herokuapp.com/',
+        proxyurl: 'https://stark-headland-49184.herokuapp.com/', //'https://cors-anywhere.samxie.net/',
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
@@ -155,7 +155,7 @@ export default class Dashboard extends React.Component{
     }
 
     fetchMining = () => {
-        const url = 'http://whattomine.com/coins.json';
+        const url = 'https://whattomine.com/coins.json';
         fetch(this.state.proxyurl + url, {
             method: "GET",
         })
