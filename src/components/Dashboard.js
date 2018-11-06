@@ -548,7 +548,7 @@ export default class Dashboard extends React.Component{
         return (
             <div className="dashboard" id="dashboard">
                 <Menu pageWrapId={ "dashboard-main" } outerContainerId={ "dashboard" } >
-                    <Sidebar 
+                    <Sidebar
                         error={this.state.error}
                         id={this.props.match.params.id}
                         history={this.props.history}

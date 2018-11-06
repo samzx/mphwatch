@@ -18,8 +18,5 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-regular.scss');
+    src: url('https://fonts.googleapis.com/css?family=Roboto');
 }
-
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build-config": "webpack",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack -p --config webpack.prod.js",
     "dev-server": "webpack-dev-server",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mphwatch.solexstudios.com",
@@ -34,14 +34,15 @@
     "react-fontawesome": "^1.6.1",
     "react-router-dom": "^4.2.2",
     "roboto-fontface": "^0.8.0",
-    "sass-loader": "6.0.6",
-    "style-loader": "0.18.2",
-    "uglifyjs-webpack-plugin": "^1.2.0",
-    "webpack": "3.1.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "devDependencies": {
+    "sass-loader": "6.0.6",
+    "style-loader": "0.18.2",
     "uglify-js-brunch": "^2.10.0",
+    "uglifyjs-webpack-plugin": "^1.2.0",
+    "webpack": "3.1.0",
+    "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.2"
   }
 }
