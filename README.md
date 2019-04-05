@@ -1,6 +1,6 @@
 # MPH Watch
 <p align="center">
-  <img src="http://www.solexstudios.com/wp-content/uploads/2018/02/img.png" alt="webpreview"/>
+  <img src="https://res.cloudinary.com/xielabs/image/upload/v1541582260/mphwatch.png" alt="webpreview"/>
 </p>
 
 
