@@ -12,6 +12,8 @@ import Workers from './Workers';
 import Earnings from './Earnings';
 import { push as Menu } from 'react-burger-menu';
 
+import { demo_balances, demo_prices, demo_workers, demo_amount24hr, demo_mining } from  '../../demo-fixtures';
+
 export default class Dashboard extends React.Component{
     
     defaultState = {
@@ -163,6 +165,7 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
+          console.log("mining", data)
             this.setState(() => ({
                 mining: data.coins
             }));
@@ -238,6 +241,16 @@ export default class Dashboard extends React.Component{
     }
 
     fetchData = () => {
+        if (window.location.href.match(/.*\/demo$/)) {
+          this.setState(({
+            balances: demo_balances,
+            prices: demo_prices,
+            amount24hr: demo_amount24hr,
+            workers: demo_workers,
+            mining: demo_mining.coins
+          }))
+          return;
+        }
         const url = `https://miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${this.state.apiKey}`;
         fetch(this.state.proxyurl + url, {
             method: "GET",
@@ -265,12 +278,14 @@ export default class Dashboard extends React.Component{
             Promise.all(balances.map((balance) => this.fetch24hr(balance.coin).promise))
             .then(() => {
                 this.setState(() => ({amount24hr: this.temp24hr}));
+                console.log("amount24hr", this.temp24hr)
                 this.temp24hr = [];
             })
 
             Promise.all(balances.map((balance) => this.fetchHash(balance.coin).promise))
             .then(() => {
                 this.setState(() => ({workers: this.tempWorkers}));
+                console.log("workders", this.tempWorkers)
                 this.tempWorkers = [];           
             })
 
