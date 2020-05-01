@@ -9,8 +9,8 @@
     "build": "webpack -p --config webpack.prod.js",
     "dev-server": "webpack-dev-server",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "upload": "scp -P21098 -r ./public/* solengyh@solexstudios.com:mphwatch.solexstudios.com",
-    "upload-test": "scp -r ./public/* sam@45.76.244.215:../../var/www/mphwatch",
+    "predeploy": "yarn build",
+    "deploy": "firebase deploy -m $(git rev-parse HEAD)",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {

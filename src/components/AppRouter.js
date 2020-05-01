@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 import Landing from './Landing';
 
 const AppRouter = () => (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
         <div>
             <Switch>
                 <Route path="/" component={Landing} exact={true} />
