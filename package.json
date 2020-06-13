@@ -9,8 +9,6 @@
     "build": "webpack -p --config webpack.prod.js",
     "dev-server": "webpack-dev-server",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "predeploy": "yarn build",
-    "deploy": "firebase deploy -m $(git rev-parse HEAD)",
     "count": "cloc $(git ls-files)"
   },
   "dependencies": {
@@ -25,7 +23,7 @@
     "css-loader": "0.28.4",
     "file-loader": "^1.1.6",
     "font-awesome": "^4.7.0",
-    "node-sass": "4.5.3",
+    "node-sass": "^4.14.1",
     "normalize.css": "7.0.0",
     "react": "16.0.0",
     "react-burger-menu": "^2.1.11",
