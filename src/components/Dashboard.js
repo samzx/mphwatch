@@ -26,7 +26,7 @@ export default class Dashboard extends React.Component{
         amount24hr: [],
         conversion: localStorage.getItem("conversion") ? localStorage.getItem("conversion") :  "usd",
         error: '',
-        proxyurl: 'https://stark-headland-49184.herokuapp.com/', //'https://cors-anywhere.samxie.net/',
+        proxyurl: 'https://api-relay-mphwatch.herokuapp.com/', //'cors-anywhere.samxie.net/',
         info: false,
         minPayout: localStorage.getItem("payout") ? localStorage.getItem("payout") : 0,
         customPayout: localStorage.getItem("custom") ? JSON.parse(localStorage.getItem("custom")) :  false,
@@ -119,7 +119,7 @@ export default class Dashboard extends React.Component{
     }
 
     fetch24hr = (coin) => {
-        const url = `https://${coin}.miningpoolhub.com/index.php?page=api&action=getdashboarddata&api_key=${this.state.apiKey}`;
+        const url = `${coin}.miningpoolhub.com/index.php?page=api&action=getdashboarddata&api_key=${this.state.apiKey}`;
         const promise = fetch(this.state.proxyurl + url, {
             method: "GET",
         })
@@ -133,7 +133,7 @@ export default class Dashboard extends React.Component{
     }
 
     fetchHash = (coin) => {
-        const url = `https://${coin}.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=${this.state.apiKey}`;
+        const url = `${coin}.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=${this.state.apiKey}`;
         const promise = fetch(this.state.proxyurl + url, {
             method: "GET",
         })
@@ -157,7 +157,7 @@ export default class Dashboard extends React.Component{
     }
 
     fetchMining = () => {
-        const url = 'https://whattomine.com/coins.json';
+        const url = 'whattomine.com/coins.json';
         fetch(this.state.proxyurl + url, {
             method: "GET",
         })
@@ -165,15 +165,16 @@ export default class Dashboard extends React.Component{
             return resp.json();
         })
         .then((data) => {
-          console.log("mining", data)
+          if (!window.location.href.match(/.*\/demo$/)) {
             this.setState(() => ({
-                mining: data.coins
-            }));
+              mining: data.coins
+            }))
+          }
         })
     }
 
     fetchPrices = () => {
-        const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
+        const url = `api.coinmarketcap.com/v1/ticker/?limit=0`;
         const promise = 
         fetch(this.state.proxyurl + url, {
             method: "GET",
@@ -193,7 +194,7 @@ export default class Dashboard extends React.Component{
     }
 
     fetchConversions = () => {
-        const url = `https://api.fixer.io/latest?base=USD`;
+        const url = `api.fixer.io/latest?base=USD`;
 
         // Fiat conversoins
         fetch(this.state.proxyurl + url, {
@@ -247,11 +248,11 @@ export default class Dashboard extends React.Component{
             prices: demo_prices,
             amount24hr: demo_amount24hr,
             workers: demo_workers,
-            mining: demo_mining.coins
+            mining: demo_mining.coins,
           }))
           return;
         }
-        const url = `https://miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${this.state.apiKey}`;
+        const url = `miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${this.state.apiKey}`;
         fetch(this.state.proxyurl + url, {
             method: "GET",
         })

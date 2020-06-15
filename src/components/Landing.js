@@ -11,9 +11,8 @@ export default class Landing extends React.Component{
     }
 
     verifyKey = (key) => {
-        const url = `https://miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${key}`;
-        const proxyurl = 'https://stark-headland-49184.herokuapp.com/';
-
+        const url = `miningpoolhub.com/index.php?page=api&action=getuserallbalances&api_key=${key}`;
+        const proxyurl = 'https://api-relay-mphwatch.herokuapp.com/';
         this.setState(() => ({fetching: true}));
         fetch(proxyurl + url, {
             method: "GET",
@@ -96,7 +95,7 @@ export default class Landing extends React.Component{
                             <a className="landing-help" onClick={(prevState) => this.setState({help: !this.state.help})} >Help</a>
                             {
                                 this.state.help && 
-                                <p>Visit <a href="https://miningpoolhub.com/?page=account&action=edit" target="_blank"> Mining pool hub</a> and paste the API key above</p>
+                                <p>Visit <a href="miningpoolhub.com/?page=account&action=edit" target="_blank"> Mining pool hub</a> and paste the API key above</p>
                             }
                         </div>
                     </form>
