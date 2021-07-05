@@ -9,11 +9,11 @@ Stats for miners mining on Mining Pool Hub. Clean and simple interface for monit
 Will always be free, open source and not store any information.
 
 ## Demo
-Live demo [here](http://mphwatch.solexstudios.com/). Login using api key.
+Live demo [here](http://mphwatch.samxie.net/). Login using api key.
 
 Directly access your stats by adding api key after domain.
 Example:
-http://mphwatch.solexstudios.com/0bfbef832c137478240043c7d430815a940e19ddb481928cf51b811fc02297cd
+http://mphwatch.samxie.net/0bfbef832c137478240043c7d430815a940e19ddb481928cf51b811fc02297cd
 
 API Key can be found under https://miningpoolhub.com/?page=account&action=edit
 
